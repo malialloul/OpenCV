@@ -20,6 +20,15 @@ const CommonFuntions = () => {
     updateData(data);
   };
 
+  const AddContact = () => {
+    let list = {
+      title: "",
+      details: "",
+    };
+    data[sectionIndex].sections.push(list);
+    updateData(data);
+  };
+
   const AddEducation = () => {
     let list = {
       from: "",
@@ -60,6 +69,7 @@ const CommonFuntions = () => {
   const UpdateFromSection = (e: any, index: number) => {
     data[sectionIndex].sections[index].from = e.target.value;
     updateData(data);
+    console.log(data);
   };
   const UpdateToSection = (e: any, index: number) => {
     data[sectionIndex].sections[index].to = e.target.value;
@@ -69,6 +79,55 @@ const CommonFuntions = () => {
     data[sectionIndex].sections[index].text = e.target.value;
     updateData(data);
   };
+  const DeleteSection = (index: number) => {
+    console.log(index);
+    data[sectionIndex].sections.splice(index, 1);
+    updateData(data);
+  };
+  const UpdateContactTitleSection = (e: any, index: number) => {
+    data[sectionIndex].sections[index].title = e.target.value;
+    updateData(data);
+  };
+  const UpdateContactDetailsSection = (e: any, index: number) => {
+    data[sectionIndex].sections[index].details = e.target.value;
+    updateData(data);
+  };
+  const CheckSections = (sectionName: string) => {
+    let enable: boolean = false;
+    data[sectionName].sections.map((section: any, index: any) => {
+      if (!enable) {
+        if (section.to !== "" && section.from !== "" && section.text !== "") {
+          enable = true;
+        }
+      }
+    });
+    return enable;
+  };
+
+  const CheckProjectsStatus = () => {
+    let enable: boolean = false;
+    data["projects"].sections.map((section: any, index: any) => {
+      if (!enable) {
+        if (section.projectName !== "" && section.projectDescription !== "") {
+          enable = true;
+        }
+      }
+    });
+    return enable;
+  };
+
+  const CheckSectionTextStatus = (sectionName: string) => {
+    let enable: boolean = false;
+    data[sectionName].sections.map((text: any, index: any) => {
+      if (!enable && text !== "") {
+        enable = true;
+      }
+    });
+    return enable;
+  };
+
+  
+
   return {
     AddExperience,
     AddLanguage,
@@ -81,6 +140,13 @@ const CommonFuntions = () => {
     UpdateFromSection,
     UpdateToSection,
     UpdateTextSection,
+    DeleteSection,
+    AddContact,
+    UpdateContactTitleSection,
+    UpdateContactDetailsSection,
+    CheckSections,
+    CheckProjectsStatus,
+    CheckSectionTextStatus,
   } as const;
 };
 

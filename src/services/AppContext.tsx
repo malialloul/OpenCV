@@ -8,7 +8,7 @@ const initialState = {
       settings: {
         fontSize: "text-2xl",
         textPosition: "justify-start",
-        textColor: "#FFFFFF",
+        textColor: "#000000",
       },
     },
 
@@ -17,7 +17,7 @@ const initialState = {
       settings: {
         fontSize: "text-lg",
         textPosition: "justify-start",
-        textColor: "#FFFFFF",
+        textColor: "#000000",
       },
     },
 
@@ -26,7 +26,7 @@ const initialState = {
       settings: {
         fontSize: "text-lg",
         textPosition: "justify-start",
-        textColor: "#FFFFFF",
+        textColor: "#000000",
       },
     },
 
@@ -36,7 +36,7 @@ const initialState = {
       settings: {
         fontSize: "text-lg",
         textPosition: "justify-start",
-        textColor: "#FFFFFF",
+        textColor: "#000000",
       },
     },
     languages: {
@@ -44,17 +44,30 @@ const initialState = {
       settings: {
         fontSize: "text-lg",
         textPosition: "justify-start",
-        textColor: "#FFFFFF",
+        textColor: "#000000",
+      },
+    },
+    contact: {
+      sections: [],
+      settings: {
+        fontSize: "text-lg",
+        textPosition: "justify-start",
+        textColor: "#000000",
       },
     },
 
     sectionIndex: "",
+    settingsModal: false,
+    templateIndex: 1,
   },
 } as {
   data: any;
   updateData: (item: any) => void;
   updateIndex: (item: string) => void;
+  updateSettingsModal: () => void;
   sectionIndex: string;
+  settingsModal: boolean;
+  templateIndex: number;
 };
 
 export const GlobalContext = createContext(initialState);
@@ -69,8 +82,20 @@ const GlobalProvider = ({ ...props }: any) => {
   };
   const updateIndex = (item: any) => {
     dispatch({
-      type: "UPDATE_INDEX",
+      type: "UPDATE_SECTION_INDEX",
       payload: item,
+    });
+  };
+  const updateTempIndex = (item: any) => {
+    dispatch({
+      type: "UPDATE_TEMPLATE_INDEX",
+      payload: item,
+    });
+  };
+  const updateSettingsModal = () => {
+    dispatch({
+      type: "UPDATE_SETTINGS_MODAL",
+      payload: !state.data.settingsModal,
     });
   };
 
@@ -80,7 +105,10 @@ const GlobalProvider = ({ ...props }: any) => {
         data: state.data,
         updateData,
         updateIndex,
+        updateSettingsModal,
         sectionIndex: state.data.sectionIndex,
+        settingsModal: state.data.settingsModal,
+        templateIndex: state.data.templateIndex,
       }}
     >
       {props.children}

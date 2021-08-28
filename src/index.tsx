@@ -1,15 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+import App from "./Home";
 import "./tailwind.css";
 import reportWebVitals from "./reportWebVitals";
 import GlobalProvider from "./services/AppContext";
+import 'bootstrap/dist/css/bootstrap.min.css';   
+import Builder1 from "./components/templates/builder/Builder1";
+import Builder2 from "./components/templates/builder/Builder2";
+import Home from "./Home";
+import Builder from "./Builder";
 
 ReactDOM.render(
   <BrowserRouter>
     <GlobalProvider>
-      <App />
+      <Builder />
     </GlobalProvider>
   </BrowserRouter>,
   document.getElementById("root")

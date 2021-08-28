@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../services/AppContext";
+import CommonFuntions from "./CommonFunctions";
 
 const Projects = () => {
   const { data } = useContext(GlobalContext);
-  return data.projects.text !== "" ? (
+  const { CheckProjectsStatus } =
+    CommonFuntions();
+  return CheckProjectsStatus() ? (
     <div className="flex-col">
       <div>Projects</div>
       <div>{data.projects.text}</div>

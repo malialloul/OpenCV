@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../services/AppContext";
+import CommonFuntions from "./CommonFunctions";
 
 const Languages = () => {
   const { data } = useContext(GlobalContext);
-  return data.languages.sections.length !== 0 ? (
+  const { CheckSectionTextStatus } =
+    CommonFuntions();
+  return CheckSectionTextStatus('languages') ? (
     <div className="flex-col">
       <div>Languages</div>
       {data.languages.sections.map((text: string, index: number) => {

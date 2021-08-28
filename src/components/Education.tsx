@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../services/AppContext";
+import CommonFuntions from "./CommonFunctions";
 
 const Education = () => {
   const { data } = useContext(GlobalContext);
-  return data.education.sections.length !== 0 ? (
+  const { CheckSections} =
+  CommonFuntions();
+
+  return CheckSections('education') ? (
     <div className="flex-col">
       <div>Education</div>
 
@@ -22,7 +26,7 @@ const Education = () => {
               <div className="flex">
                 <div>
                   <span className="">{section.from}</span>
-                  {section.from !== "" && <span>-</span>}
+                  {section.from !== "" && <span> into </span>}
                   <span className="">{section.to}</span>
                 </div>
               </div>

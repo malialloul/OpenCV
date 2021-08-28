@@ -3,6 +3,7 @@ import { GlobalContext } from "../services/AppContext";
 
 const PersonalProfile = () => {
   const { data } = useContext(GlobalContext);
+  console.log(data)
   return (
     data.personal_details.text !== "" ? (
       <div className="flex-col">
