@@ -19,7 +19,7 @@ const Projects = () => {
               data.projects.settings.fontSize +
               " flex " +
               data.projects.settings.textPosition
-            }
+            } 
           >
             <div className="flex-col gap-y-3">
               <div className="flex-col">
