@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/OpenCV/static/css/main.0e941f7d.chunk.css",
+    "main.js": "/OpenCV/static/js/main.ebbd4100.chunk.js",
+    "main.js.map": "/OpenCV/static/js/main.ebbd4100.chunk.js.map",
+    "runtime-main.js": "/OpenCV/static/js/runtime-main.cac81b91.js",
+    "runtime-main.js.map": "/OpenCV/static/js/runtime-main.cac81b91.js.map",
+    "static/css/2.818011ed.chunk.css": "/OpenCV/static/css/2.818011ed.chunk.css",
+    "static/js/2.a80b6cf5.chunk.js": "/OpenCV/static/js/2.a80b6cf5.chunk.js",
+    "static/js/2.a80b6cf5.chunk.js.map": "/OpenCV/static/js/2.a80b6cf5.chunk.js.map",
+    "static/js/3.801cac30.chunk.js": "/OpenCV/static/js/3.801cac30.chunk.js",
+    "static/js/3.801cac30.chunk.js.map": "/OpenCV/static/js/3.801cac30.chunk.js.map",
+    "index.html": "/OpenCV/index.html",
+    "static/css/2.818011ed.chunk.css.map": "/OpenCV/static/css/2.818011ed.chunk.css.map",
+    "static/css/main.0e941f7d.chunk.css.map": "/OpenCV/static/css/main.0e941f7d.chunk.css.map",
+    "static/js/2.a80b6cf5.chunk.js.LICENSE.txt": "/OpenCV/static/js/2.a80b6cf5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cac81b91.js",
+    "static/css/2.818011ed.chunk.css",
+    "static/js/2.a80b6cf5.chunk.js",
+    "static/css/main.0e941f7d.chunk.css",
+    "static/js/main.ebbd4100.chunk.js"
+  ]
+}
