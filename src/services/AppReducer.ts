@@ -1,8 +1,11 @@
+import CommonFuntions from "./CommonFunctions";
+
 const AppReducer = (state: any, action: any) => {
   switch (action.type) {
     case "UPDATE_DATA":
+      sessionStorage.setItem("info", JSON.stringify(action.payload));
       return {
-        data: state.data,
+        data: action.payload,
       };
     case "UPDATE_SECTION_INDEX":
       let temp = state.data;
@@ -12,7 +15,7 @@ const AppReducer = (state: any, action: any) => {
       };
     case "UPDATE_TEMPLATE_INDEX":
       let tempIndex = state.data;
-      tempIndex.templateIndex = action.payload;
+      tempIndex.userSettings.templateIndex = action.payload;
       return {
         data: tempIndex,
       };
@@ -21,6 +24,18 @@ const AppReducer = (state: any, action: any) => {
       tempList.settingsModal = action.payload;
       return {
         data: tempList,
+      };
+    case "UPDATE_USER_SETTINGS":
+      let data = state.data;
+      data.userSettings = action.payload;
+      return {
+        data: data,
+      };
+    case "UPDATE_USER_DETAILS":
+      let userData = state.data;
+      userData.userDetails = action.payload;
+      return {
+        data: userData,
       };
 
     default:

@@ -1,9 +1,5 @@
-import React, { useContext } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { GlobalContext } from "../services/AppContext";
-import CommonFuntions from "./CommonFunctions";
-import { Button, Modal } from "react-bootstrap";
+import React from "react";
+import { Modal } from "react-bootstrap";
 
 const MyModal = ({ ...props }) => {
 

@@ -1,20 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import App from "./Home";
 import "./tailwind.css";
 import reportWebVitals from "./reportWebVitals";
 import GlobalProvider from "./services/AppContext";
-import 'bootstrap/dist/css/bootstrap.min.css';   
-import Builder1 from "./components/templates/builder/Builder1";
-import Builder2 from "./components/templates/builder/Builder2";
-import Home from "./Home";
-import Builder from "./Builder";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Home from "./pages/Home";
+import Builder from "./pages/Builder";
+import { Router, Route, Switch } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import Landing from "./pages/Landing";
+import MyTemplate from "./pages/MyTemplate";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/Signin";
+
+const customHistory = createBrowserHistory();
 
 ReactDOM.render(
   <BrowserRouter>
     <GlobalProvider>
-      <Builder />
+      <Router history={customHistory}>
+        <Switch>
+          <Route path="/" component={Landing} exact />
+          <Route path="/home" component={Home} exact />
+          <Route path="/builder" component={Builder} exact />
+          <Route path="/signup" component={SignUp} exact />
+          <Route path="/signin" component={SignIn} exact />
+          <Route path="/template/:id" component={MyTemplate} exact />
+        </Switch>
+      </Router>
     </GlobalProvider>
   </BrowserRouter>,
   document.getElementById("root")

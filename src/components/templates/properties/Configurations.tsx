@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../../../services/AppContext";
-import CommonFuntions from "../../CommonFunctions";
-import Modal from "../../Modal";
+import CommonFuntions from "../../../services/CommonFunctions";
 
 const Configurations = () => {
-  const { data, updateData, updateIndex, sectionIndex, updateSettingsModal } =
-    useContext(GlobalContext);
+  const { data, updateSettingsModal } = useContext(GlobalContext);
   const {
     AddEducation,
     ModifyText,
@@ -23,10 +21,9 @@ const Configurations = () => {
     UpdateContactTitleSection,
     UpdateContactDetailsSection,
   } = CommonFuntions();
-
   const Header = (
     <div className="flex justify-between gap-x-0.5">
-      <span> {sectionIndex.toUpperCase().replace("_", " ")}</span>
+      <span> {data.sectionIndex.toUpperCase().replace("_", " ")}</span>
       <span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,18 +45,18 @@ const Configurations = () => {
 
   const Body = (
     <div className="">
-      {sectionIndex === "personal_details" ? (
+      {data.sectionIndex === "personal_details" ? (
         <div className="flex-col">
           <div className="flex justify-center">
             <textarea
               className={"flex h-52 w-full "}
               onChange={(e) => ModifyText(e)}
               placeholder="Type your profile"
-              value={data[sectionIndex].text}
+              value={data.userSettings[data.sectionIndex].text}
             />
           </div>
         </div>
-      ) : sectionIndex === "education" ? (
+      ) : data.sectionIndex === "education" ? (
         <div className="flex-col">
           <div className="flex justify-center">
             <button
@@ -71,51 +68,53 @@ const Configurations = () => {
           </div>
           <br />
           <div className="flex-wrap justify-center flex items-center">
-            {data[sectionIndex].sections.map((section: any, index: any) => {
-              return (
-                <div className="flex-col w-full gap-y-6 pl-2 pt-5">
-                  <div className="flex justify-center">
-                    <span>Education {index + 1}</span>
-                  </div>
-                  <div className="border-2 p-2 w-full">
-                    <div className="flex-wrap w-full gap-x-3">
-                      <input
-                        onChange={(e) => UpdateFromSection(e, index)}
-                        className="w-1/2 p-2 rounded"
-                        placeholder="from"
-                        type="date"
-                        value={section.from}
-                      />
-                      <input
-                        className="w-1/2 p-2 rounded"
-                        placeholder="To"
-                        onChange={(e) => UpdateToSection(e, index)}
-                        type="date"
-                        value={section.to}
+            {data.userSettings[data.sectionIndex].sections.map(
+              (section: any, index: any) => {
+                return (
+                  <div key={"education"+index} className="flex-col w-full gap-y-6 pl-2 pt-5">
+                    <div className="flex justify-center">
+                      <span>Education {index + 1}</span>
+                    </div>
+                    <div className="border-2 p-2 w-full">
+                      <div className="flex-wrap w-full gap-x-3">
+                        <input
+                          onChange={(e) => UpdateFromSection(e, index)}
+                          className="w-1/2 p-2 rounded"
+                          placeholder="from"
+                          type="date"
+                          value={section.from}
+                        />
+                        <input
+                          className="w-1/2 p-2 rounded"
+                          placeholder="To"
+                          onChange={(e) => UpdateToSection(e, index)}
+                          type="date"
+                          value={section.to}
+                        />
+                      </div>
+                      <br />
+                      <textarea
+                        className="rounded w-full p-2"
+                        placeholder="Education"
+                        onChange={(e) => UpdateTextSection(e, index)}
+                        value={section.text}
                       />
                     </div>
-                    <br />
-                    <textarea
-                      className="rounded w-full p-2"
-                      placeholder="Education"
-                      onChange={(e) => UpdateTextSection(e, index)}
-                      value={section.text}
-                    />
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => DeleteSection(index)}
+                        className="p-3 w-full cursor-pointer bg-red-500"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex justify-center">
-                    <button
-                      onClick={() => DeleteSection(index)}
-                      className="p-3 w-full cursor-pointer bg-red-500"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         </div>
-      ) : sectionIndex === "experience" ? (
+      ) : data.sectionIndex === "experience" ? (
         <div className="flex-col">
           <div className="flex justify-center">
             <button
@@ -127,51 +126,53 @@ const Configurations = () => {
           </div>
           <br />
           <div className="flex-wrap justify-center flex items-center">
-            {data[sectionIndex].sections.map((section: any, index: any) => {
-              return (
-                <div className="flex-col gap-y-6 pl-2 pt-5">
-                  <div className="flex justify-center">
-                    <span>Experience {index + 1}</span>
-                  </div>
-                  <div className="border-2 p-2">
-                    <div className="flex-wrap gap-x-3">
-                      <input
-                        onChange={(e) => UpdateFromSection(e, index)}
-                        className="w-1/2 p-2 rounded"
-                        placeholder="from"
-                        type="date"
-                        value={section.from}
-                      />
-                      <input
-                        className="w-1/2 p-2 rounded"
-                        placeholder="To"
-                        onChange={(e) => UpdateToSection(e, index)}
-                        type="date"
-                        value={section.to}
+            {data.userSettings[data.sectionIndex].sections.map(
+              (section: any, index: any) => {
+                return (
+                  <div key={"experience"+index} className="flex-col gap-y-6 pl-2 pt-5">
+                    <div className="flex justify-center">
+                      <span>Experience {index + 1}</span>
+                    </div>
+                    <div className="border-2 p-2">
+                      <div className="flex-wrap gap-x-3">
+                        <input
+                          onChange={(e) => UpdateFromSection(e, index)}
+                          className="w-1/2 p-2 rounded"
+                          placeholder="from"
+                          type="date"
+                          value={section.from}
+                        />
+                        <input
+                          className="w-1/2 p-2 rounded"
+                          placeholder="To"
+                          onChange={(e) => UpdateToSection(e, index)}
+                          type="date"
+                          value={section.to}
+                        />
+                      </div>
+                      <br />
+                      <textarea
+                        className="rounded w-full p-2"
+                        placeholder="Experience"
+                        onChange={(e) => UpdateTextSection(e, index)}
+                        value={section.text}
                       />
                     </div>
-                    <br />
-                    <textarea
-                      className="rounded w-full p-2"
-                      placeholder="Experience"
-                      onChange={(e) => UpdateTextSection(e, index)}
-                      value={section.text}
-                    />
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => DeleteSection(index)}
+                        className="p-3 w-full cursor-pointer bg-red-500"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex justify-center">
-                    <button
-                      onClick={() => DeleteSection(index)}
-                      className="p-3 w-full cursor-pointer bg-red-500"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         </div>
-      ) : sectionIndex === "languages" ? (
+      ) : data.sectionIndex === "languages" ? (
         <div className="flex-col">
           <div className="flex justify-center">
             <button
@@ -181,34 +182,37 @@ const Configurations = () => {
               Add Language
             </button>
           </div>
-          {data[sectionIndex].sections.map((text: any, index: any) => {
-            return (
-              <div key={"lang" + index} className="flex-col align-middle">
-                <div className="flex items-center">
-                  <input
-                    onChange={(e) => UpdateLanguage(e, index)}
-                    className="p-2 mb-2 mt-2 w-full"
-                    value={text}
-                    placeholder={"Language " + (index + 1)}
-                  />
-                  <div
-                    onClick={() => DeleteSection(index)}
-                    className="rounded bg-red-500 cursor-pointer flex justify-center items-center w-10 h-10"
-                  >
-                    X
+          {data.userSettings[data.sectionIndex].sections.map(
+            (text: any, index: any) => {
+              return (
+                <div key={"lang" + index} className="flex-col align-middle">
+                  <div className="flex items-center">
+                    <input
+                      onChange={(e) => UpdateLanguage(e, index)}
+                      className="p-2 mb-2 mt-2 w-full"
+                      value={text}
+                      placeholder={"Language " + (index + 1)}
+                    />
+                    <div
+                      onClick={() => DeleteSection(index)}
+                      className="rounded bg-red-500 cursor-pointer flex justify-center items-center w-10 h-10"
+                    >
+                      X
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            }
+          )}
         </div>
-      ) : sectionIndex === "projects" ? (
+      ) : data.sectionIndex === "projects" ? (
         <div className="flex-col gap-y-2">
           <div className="flex-col flex justify-center">
             <input
               placeholder="Projects Description "
               onChange={(e) => ModifyText(e)}
               className="p-2"
+              value={data.userSettings.projects.text}
             />{" "}
             <br />
             <button
@@ -219,41 +223,42 @@ const Configurations = () => {
             </button>
           </div>
           <div className="p-3">
-            {data[sectionIndex].sections.map((section: any, index: any) => {
-              return (
-                <div key={"project" + index} className="flex-col mt-3">
-                  <div className="flex justify-center">
-                    <span>Project {index + 1}</span>
+            {data.userSettings[data.sectionIndex].sections.map(
+              (section: any, index: any) => {
+                return (
+                  <div key={"project" + index} className="flex-col mt-3">
+                    <div className="flex justify-center">
+                      <span>Project {index + 1}</span>
+                    </div>
+                    <div className="border-2">
+                      <input
+                        onChange={(e) => UpdateProjectName(e, index)}
+                        placeholder="Project Title"
+                        value={section.projectName}
+                        className="p-2 mb-3 w-full"
+                      ></input>
+                      <textarea
+                        className="w-full p-2"
+                        placeholder={"Project " + (index + 1)}
+                        onChange={(e) => UpdateProjectDescription(e, index)}
+                        value={section.projectDescription}
+                      />
+                    </div>
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => DeleteSection(index)}
+                        className="p-3 w-full cursor-pointer bg-red-500"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <div className="border-2">
-                    <input
-                      onChange={(e) => UpdateProjectName(e, index)}
-                      placeholder="Project Title"
-                      value={section.projectName}
-                      className="p-2 mb-3 w-full"
-                    ></input>
-                    <textarea
-                      className="w-full p-2"
-                      placeholder={"Project " + (index + 1)}
-                      onChange={(e) => UpdateProjectDescription(e, index)}
-                    >
-                      {section.projectDescription}
-                    </textarea>
-                  </div>
-                  <div className="flex justify-center">
-                    <button
-                      onClick={() => DeleteSection(index)}
-                      className="p-3 w-full cursor-pointer bg-red-500"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              }
+            )}
           </div>
         </div>
-      ) : sectionIndex === "contact" ? (
+      ) : data.sectionIndex === "contact" ? (
         <div className="flex-col">
           <div className="flex justify-center">
             <button
@@ -263,34 +268,36 @@ const Configurations = () => {
               Add Contact
             </button>
           </div>
-          {data[sectionIndex].sections.map((section: any, index: any) => {
-            return (
-              <div key={"contact" + index} className="flex-col align-middle">
-                <div className="flex items-center">
-                  <input
-                    onChange={(e) => UpdateContactTitleSection(e, index)}
-                    className="p-2 mb-2 mt-2 w-full"
-                    value={section.title}
-                    placeholder={"Contact " + (index + 1)}
-                  />
+          {data.userSettings[data.sectionIndex].sections.map(
+            (section: any, index: any) => {
+              return (
+                <div key={"contact" + index} className="flex-col align-middle">
+                  <div className="flex items-center">
+                    <input
+                      onChange={(e) => UpdateContactTitleSection(e, index)}
+                      className="p-2 mb-2 mt-2 w-full"
+                      value={section.title}
+                      placeholder={"Contact " + (index + 1)}
+                    />
 
-                  <input
-                    onChange={(e) => UpdateContactDetailsSection(e, index)}
-                    className="p-2 mb-2 mt-2 w-full"
-                    value={section.details}
-                    placeholder={"Details"}
-                  />
+                    <input
+                      onChange={(e) => UpdateContactDetailsSection(e, index)}
+                      className="p-2 mb-2 mt-2 w-full"
+                      value={section.details}
+                      placeholder={"Details"}
+                    />
 
-                  <div
-                    onClick={() => DeleteSection(index)}
-                    className="rounded bg-red-500 flex justify-center cursor-pointer items-center w-10 h-10"
-                  >
-                    X
+                    <div
+                      onClick={() => DeleteSection(index)}
+                      className="rounded bg-red-500 flex justify-center cursor-pointer items-center w-10 h-10"
+                    >
+                      X
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            }
+          )}
         </div>
       ) : (
         <></>

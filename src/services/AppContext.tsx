@@ -1,73 +1,86 @@
 import React, { createContext, useReducer } from "react";
+import CommonFuntions from "./CommonFunctions";
 import AppReducer from "../services/AppReducer";
+
+const GetUserInfo = () => {
+  const userInfoStorage = sessionStorage.getItem("info");
+  let userInfo = {
+    userDetails: { id: "", username: "", email:"" },
+    userSettings: {
+      personal_details: {
+        text: "",
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
+      education: {
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
+      experience: {
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
+      projects: {
+        text: "",
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
+      languages: {
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
+      contact: {
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
+      templateIndex: 0,
+      published: false
+    },
+  };
+  if (userInfoStorage !== null) {
+    userInfo = JSON.parse(userInfoStorage);
+  }
+  return userInfo;
+};
 
 const initialState = {
   data: {
-    personal_details: {
-      text: "",
-      settings: {
-        fontSize: "text-2xl",
-        textPosition: "justify-start",
-        textColor: "#000000",
-      },
-    },
-
-    education: {
-      sections: [],
-      settings: {
-        fontSize: "text-lg",
-        textPosition: "justify-start",
-        textColor: "#000000",
-      },
-    },
-
-    experience: {
-      sections: [],
-      settings: {
-        fontSize: "text-lg",
-        textPosition: "justify-start",
-        textColor: "#000000",
-      },
-    },
-
-    projects: {
-      text: "",
-      sections: [],
-      settings: {
-        fontSize: "text-lg",
-        textPosition: "justify-start",
-        textColor: "#000000",
-      },
-    },
-    languages: {
-      sections: [],
-      settings: {
-        fontSize: "text-lg",
-        textPosition: "justify-start",
-        textColor: "#000000",
-      },
-    },
-    contact: {
-      sections: [],
-      settings: {
-        fontSize: "text-lg",
-        textPosition: "justify-start",
-        textColor: "#000000",
-      },
-    },
-
+    userDetails: GetUserInfo().userDetails,
+    userSettings: GetUserInfo().userSettings,
     sectionIndex: "",
     settingsModal: false,
-    templateIndex: 1,
   },
 } as {
   data: any;
   updateData: (item: any) => void;
   updateIndex: (item: string) => void;
   updateSettingsModal: () => void;
-  sectionIndex: string;
-  settingsModal: boolean;
-  templateIndex: number;
+  updateTempIndex: (item: number) => void;
+  updateUserSettings: (item: any) => void;
+  updateUserDetails: (item: any) => void;
 };
 
 export const GlobalContext = createContext(initialState);
@@ -86,7 +99,7 @@ const GlobalProvider = ({ ...props }: any) => {
       payload: item,
     });
   };
-  const updateTempIndex = (item: any) => {
+  const updateTempIndex = (item: number) => {
     dispatch({
       type: "UPDATE_TEMPLATE_INDEX",
       payload: item,
@@ -99,6 +112,20 @@ const GlobalProvider = ({ ...props }: any) => {
     });
   };
 
+  const updateUserSettings = (item: any) => {
+    dispatch({
+      type: "UPDATE_USER_SETTINGS",
+      payload: item,
+    });
+  };
+
+  const updateUserDetails = (item: any) => {
+    dispatch({
+      type: "UPDATE_USER_DETAILS",
+      payload: item,
+    });
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -106,9 +133,9 @@ const GlobalProvider = ({ ...props }: any) => {
         updateData,
         updateIndex,
         updateSettingsModal,
-        sectionIndex: state.data.sectionIndex,
-        settingsModal: state.data.settingsModal,
-        templateIndex: state.data.templateIndex,
+        updateTempIndex,
+        updateUserSettings,
+        updateUserDetails,
       }}
     >
       {props.children}

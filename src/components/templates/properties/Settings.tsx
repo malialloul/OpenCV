@@ -13,7 +13,7 @@ const Settings = () => {
     "text-4xl",
   ];
   const [visible, isVisible] = useState(false);
-  const { data, updateData, sectionIndex } = useContext(GlobalContext);
+  const { data, updateData } = useContext(GlobalContext);
   const tempSettings = {
     fontSize: "text-lg",
     textPosition: "justify-start",
@@ -21,31 +21,31 @@ const Settings = () => {
   };
   const [settings, setSettings] = useState(tempSettings);
   useEffect(() => {
-    if (sectionIndex !== "") {
-      setSettings(data[sectionIndex].settings);
+    if (data.sectionIndex !== "") {
+      setSettings(data.userSettings[data.sectionIndex].settings);
     }
-  }, [sectionIndex, data]);
+  }, [data.sectionIndex, data]);
 
   const increaseFontSize = () => {
-    data[sectionIndex].settings.fontSize =
+    data.userSettings[data.sectionIndex].settings.fontSize =
       fontSizeArray[fontSizeArray.indexOf(settings.fontSize) + 1];
     updateData(data);
   };
   const decreaseFontSize = () => {
-    data[sectionIndex].settings.fontSize =
+    data.userSettings[data.sectionIndex].settings.fontSize =
       fontSizeArray[fontSizeArray.indexOf(settings.fontSize) - 1];
     updateData(data);
   };
   const modifyTextPosition = (event: any) => {
-    data[sectionIndex].settings.textPosition = event.target.value;
+    data.userSettings[data.sectionIndex].settings.textPosition = event.target.value;
     updateData(data);
   };
   const changeTextColor = (event: any) => {
-    data[sectionIndex].settings.textColor = event.hex;
+    data.userSettings[data.sectionIndex].settings.textColor = event.hex;
     updateData(data);
   };
   const SettingsHeader = (
-    <div>{sectionIndex.toUpperCase().replace("_", " ") + " "} SETTINGS </div>
+    <div>{data.sectionIndex.toUpperCase().replace("_", " ") + " "} SETTINGS </div>
   );
   const SettingsBody = (
     <div className="flex flex-col gap-x-10 ">
