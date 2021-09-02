@@ -1,4 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
+import { useContext } from "react";
+import { useState } from "react";
 import Builder1 from "../components/templates/builder/Builder1";
 import Builder2 from "../components/templates/builder/Builder2";
 import Builder3 from "../components/templates/builder/Builder3";
@@ -7,23 +9,22 @@ import CommonFuntions from "../services/CommonFunctions";
 import { getUserInfo } from "../services/HTTPContext";
 
 const MyTemplate = ({ ...props }: any) => {
-  const { StoreUserInfo, GetUserInfo, Logout } = CommonFuntions();
+  const { Logout } = CommonFuntions();
+  const { data, updateData } = useContext(GlobalContext);
   const id = props.match.params.id;
   let templateIndex = -1;
   let published = false;
   getUserInfo(id).then((response) => {
-    Logout();
-
     if (response.userSettings) {
-      console.log(response);
-      StoreUserInfo(response);
+      updateData(response);
     }
   });
-  if (GetUserInfo().userSettings) {
-    published = GetUserInfo().userSettings.published;
+  //console.log(data)
+  if (data.userSettings) {
+    published = data.userSettings.published;
   }
   if (published) {
-    templateIndex = GetUserInfo().userSettings.templateIndex;
+    templateIndex = data.userSettings.templateIndex;
   }
   return published ? (
     templateIndex === 0 ? (
@@ -33,10 +34,22 @@ const MyTemplate = ({ ...props }: any) => {
     ) : templateIndex === 2 ? (
       <Builder3 debug={true} />
     ) : (
-      <span>This CV is not published yet</span>
+      <span>
+        This CV is not published yet or not ready. Try to
+        <span onClick={() => window.location.reload()}>
+          {" "}
+          <a className="text-blue-500 cursor-pointer">Refresh</a>
+        </span>{" "}
+      </span>
     )
   ) : (
-    <span>This CV is not published yet</span>
+    <span>
+      This CV is not published yet or not ready. Try to
+      <span onClick={() => window.location.reload()}>
+        {" "}
+        <a className="text-blue-500 cursor-pointer">Refresh</a>
+      </span>{" "}
+    </span>
   );
 };
 

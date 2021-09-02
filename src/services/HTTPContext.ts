@@ -1,25 +1,60 @@
-import React, { useContext } from "react";
+import React from "react";
 import { v4 as uuidv4 } from "uuid";
 
 export const addUser = async (
   username: string,
   password: string,
-  email: string
+  email: string,
+  token: string,
+  verified: boolean
 ) => {
+  const id = uuidv4();
+  const body = {
+    id: id,
+    username: username,
+    password: password,
+    email: email,
+    token: token,
+    verified: verified,
+  };
   const requestOptions = {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      id: uuidv4(),
-      username: username,
-      password: password,
-      email: email,
-    }),
+    body: JSON.stringify(body),
   };
   return await fetch("http://localhost:8000/users/", requestOptions).then(
+    (response) => response.json()
+  );
+};
+
+export const updateUser = async (
+  id: string,
+  username: string,
+  password: string,
+  email: string,
+  token: string,
+  verified: boolean
+) => {
+  const body = {
+    id: id,
+    username: username,
+    password: password,
+    email: email,
+    token: token,
+    verified: verified,
+  };
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+  return await fetch("http://localhost:8000/users/" + id, requestOptions).then(
     (response) => response.json()
   );
 };
@@ -81,6 +116,14 @@ export const addUserSettings = async (id: string) => {
           textColor: "#000000",
         },
       },
+      skills: {
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
       projects: {
         text: "",
         sections: [],
@@ -99,6 +142,10 @@ export const addUserSettings = async (id: string) => {
         },
       },
       contact: {
+        info: {
+          phoneNumber: "",
+          email: "",
+        },
         sections: [],
         settings: {
           fontSize: "text-lg",

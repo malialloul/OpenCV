@@ -5,6 +5,7 @@ import Experience from "../../templates/sections/Experience";
 import Languages from "../../templates/sections/Languages";
 import PersonalProfile from "../../templates/sections/PersonalProfile";
 import Projects from "../../templates/sections/Projects";
+import Skills from "../sections/Skills";
 
 const Builder2 = ({ ...props }: any) => {
   return (
@@ -60,6 +61,19 @@ const Builder2 = ({ ...props }: any) => {
       ) : (
         <div className="p-3 flex-col">
           <span>Experience</span>
+          <div className="w-full p-3 bg-gray-400 mb-2"></div>
+          <div className="w-full p-3 bg-gray-400 mb-2"></div>
+          <div className="w-full p-3 bg-gray-400 mb-2"></div>
+        </div>
+      )}
+
+      {props.debug ? (
+        <div className="p-3">
+          <Skills />
+        </div>
+      ) : (
+        <div className="p-3 flex-col">
+          <span>Skiils</span>
           <div className="w-full p-3 bg-gray-400 mb-2"></div>
           <div className="w-full p-3 bg-gray-400 mb-2"></div>
           <div className="w-full p-3 bg-gray-400 mb-2"></div>

@@ -18,8 +18,11 @@ const Configurations = () => {
     UpdateProjectName,
     DeleteSection,
     AddContact,
-    UpdateContactTitleSection,
-    UpdateContactDetailsSection,
+    UpdateTitleSection,
+    UpdateDetailsSection,
+    AddSkill,
+    UpdateContactPhoneNumber,
+    UpdateContactEmail,
   } = CommonFuntions();
   const Header = (
     <div className="flex justify-between gap-x-0.5">
@@ -71,7 +74,10 @@ const Configurations = () => {
             {data.userSettings[data.sectionIndex].sections.map(
               (section: any, index: any) => {
                 return (
-                  <div key={"education"+index} className="flex-col w-full gap-y-6 pl-2 pt-5">
+                  <div
+                    key={"education" + index}
+                    className="flex-col w-full gap-y-6 pl-2 pt-5"
+                  >
                     <div className="flex justify-center">
                       <span>Education {index + 1}</span>
                     </div>
@@ -129,7 +135,10 @@ const Configurations = () => {
             {data.userSettings[data.sectionIndex].sections.map(
               (section: any, index: any) => {
                 return (
-                  <div key={"experience"+index} className="flex-col gap-y-6 pl-2 pt-5">
+                  <div
+                    key={"experience" + index}
+                    className="flex-col gap-y-6 pl-2 pt-5"
+                  >
                     <div className="flex justify-center">
                       <span>Experience {index + 1}</span>
                     </div>
@@ -268,20 +277,87 @@ const Configurations = () => {
               Add Contact
             </button>
           </div>
+
+          <div className="flex-col align-middle">
+            <div className="flex items-center">
+              <div className="p-2 mb-2 mt-2 w-full">Phone Number</div>
+
+              <input
+                onChange={(e) => UpdateContactPhoneNumber(e.target.value)}
+                className="p-2 mb-2 mt-2 w-full"
+                value={data.userSettings.contact.info.phoneNumber}
+                placeholder={"Phone Number"}
+              />
+            </div>
+
+            <div className="flex items-center">
+              <div className="p-2 mb-2 mt-2 w-full">Email</div>
+
+              <input
+                onChange={(e) => UpdateContactEmail(e.target.value)}
+                className="p-2 mb-2 mt-2 w-full"
+                value={data.userSettings.contact.info.email}
+                type="email"
+                placeholder={"Email"}
+              />
+            </div>
+          </div>
+
           {data.userSettings[data.sectionIndex].sections.map(
             (section: any, index: any) => {
               return (
                 <div key={"contact" + index} className="flex-col align-middle">
                   <div className="flex items-center">
                     <input
-                      onChange={(e) => UpdateContactTitleSection(e, index)}
+                      onChange={(e) => UpdateTitleSection(e, index)}
                       className="p-2 mb-2 mt-2 w-full"
                       value={section.title}
                       placeholder={"Contact " + (index + 1)}
                     />
 
                     <input
-                      onChange={(e) => UpdateContactDetailsSection(e, index)}
+                      onChange={(e) => UpdateDetailsSection(e, index)}
+                      className="p-2 mb-2 mt-2 w-full"
+                      value={section.details}
+                      placeholder={"Details"}
+                    />
+
+                    <div
+                      onClick={() => DeleteSection(index)}
+                      className="rounded bg-red-500 flex justify-center cursor-pointer items-center w-10 h-10"
+                    >
+                      X
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+          )}
+        </div>
+      ) : data.sectionIndex === "skills" ? (
+        <div className="flex-col">
+          <div className="flex justify-center">
+            <button
+              onClick={() => AddSkill()}
+              className="rounded cursor-pointer w-full h-12 p-2 bg-indigo-500"
+            >
+              Add Skill
+            </button>
+          </div>
+          {data.userSettings[data.sectionIndex].sections.map(
+            (section: any, index: any) => {
+              return (
+                <div key={"contact" + index} className="flex-col align-middle">
+                  <div className="flex items-center">
+                    <input
+                      onChange={(e) => UpdateTitleSection(e, index)}
+                      className="p-2 mb-2 mt-2 w-full"
+                      value={section.title}
+                      placeholder={"Contact " + (index + 1)}
+                    />
+
+                    <input
+                      onChange={(e) => UpdateDetailsSection(e, index)}
                       className="p-2 mb-2 mt-2 w-full"
                       value={section.details}
                       placeholder={"Details"}

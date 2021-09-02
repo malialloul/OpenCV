@@ -3,10 +3,11 @@ import { GlobalContext } from "./AppContext";
 import { APIKEY } from "../services/ApiKey";
 import emailjs from "emailjs-com";
 import { v4 as uuidv4 } from "uuid";
-import { addUser, getUsers, addUserSettings } from "../services/HTTPContext";
+import { getUserInfo } from "./HTTPContext";
 
 const CommonFuntions = () => {
-  let { data, updateData } = useContext(GlobalContext);
+  let { data, updateData, updateUserDetails, updateUserSettings } =
+    useContext(GlobalContext);
   const AddExperience = () => {
     let list = {
       from: "",
@@ -23,6 +24,25 @@ const CommonFuntions = () => {
   };
 
   const AddContact = () => {
+    let list = {
+      title: "",
+      details: "",
+    };
+    data.userSettings[data.sectionIndex].sections.push(list);
+    updateData(data);
+  };
+
+  const UpdateContactPhoneNumber = (phoneNumber: string) => {
+    data.userSettings[data.sectionIndex].info.phoneNumber = phoneNumber;
+    updateData(data);
+  };
+
+  const UpdateContactEmail = (email: string) => {
+    data.userSettings[data.sectionIndex].info.email = email;
+    updateData(data);
+  };
+
+  const AddSkill = () => {
     let list = {
       title: "",
       details: "",
@@ -88,15 +108,16 @@ const CommonFuntions = () => {
     data.userSettings[data.sectionIndex].sections.splice(index, 1);
     updateData(data);
   };
-  const UpdateContactTitleSection = (e: any, index: number) => {
+  const UpdateTitleSection = (e: any, index: number) => {
     data.userSettings[data.sectionIndex].sections[index].title = e.target.value;
     updateData(data);
   };
-  const UpdateContactDetailsSection = (e: any, index: number) => {
+  const UpdateDetailsSection = (e: any, index: number) => {
     data.userSettings[data.sectionIndex].sections[index].details =
       e.target.value;
     updateData(data);
   };
+
   const CheckSections = (sectionName: string) => {
     let enable: boolean = false;
     data.userSettings[sectionName].sections.map((section: any, index: any) => {
@@ -131,6 +152,14 @@ const CommonFuntions = () => {
     return enable;
   };
 
+  const CheckContactStatus = () => {
+    return (
+      data.userSettings.contact.info.phoneNumber !== "" ||
+      data.userSettings.contact.info.email !== "" ||
+      CheckSectionTextStatus("contact")
+    );
+  };
+
   const CheckSectionTextStatus = (sectionName: string) => {
     let enable: boolean = false;
     data.userSettings[sectionName].sections.map((text: any, index: any) => {
@@ -145,20 +174,8 @@ const CommonFuntions = () => {
     sessionStorage.setItem("info", JSON.stringify(info));
   };
 
-  const GetUserInfo = () => {
-    const userInfoStorage = sessionStorage.getItem("info");
-    let userInfo = {
-      userDetails: { id: "", username: "" },
-      userSettings: { templateIndex: -1, published: false },
-    };
-    if (userInfoStorage !== null) {
-      userInfo = JSON.parse(userInfoStorage);
-    }
-    return userInfo;
-  };
-
   const Logout = () => {
-    sessionStorage.removeItem("info");
+    sessionStorage.removeItem("OpenCVId");
   };
 
   const PublishTemplate = () => {
@@ -203,23 +220,26 @@ const CommonFuntions = () => {
       title: "Facebook",
       details: "www.facebook.com",
     });
+    data.userSettings.contact.info.phoneNumber = "+96170888548";
+    data.userSettings.contact.info.email = "xyz@xyz.com";
+
+    data.userSettings.skills.sections.push({
+      title: "Front End Development",
+      details: "HTML, CSS ...",
+    });
+
+    data.userSettings.skills.sections.push({
+      title: "Back End Development",
+      details: "JAVA, Python ...",
+    });
 
     updateData(data);
   };
 
   const GenerateToken = () => {
     let token = uuidv4();
-    let done = true;
-    getUsers().then((response) => {
-      while (!done) {
-        let list = response.filter((user: any) => user.token === token);
-        if (list.length === 0) {
-          done = true;
-        }
-      }
-      data.userDetails.token = token;
-      updateData(data);
-    });
+    data.userDetails.token = token;
+    updateData(data);
   };
 
   const ClearCV = () => {
@@ -229,6 +249,9 @@ const CommonFuntions = () => {
     data.userSettings.languages.sections = [];
     data.userSettings.projects.sections = [];
     data.userSettings.contact.sections = [];
+    data.userSettings.skills.sections = [];
+    data.userSettings.contact.info.phoneNumber = "";
+    data.userSettings.contact.info.email = "";
 
     updateData(data);
   };
@@ -245,8 +268,24 @@ const CommonFuntions = () => {
         }
       );
   };
-
+  const InitializeUser = () => {
+    let userID: any = "";
+    if (
+      sessionStorage.getItem("OpenCVId") !== "" &&
+      sessionStorage.getItem("OpenCVId") !== null &&
+      data.userDetails.id === ""
+    ) {
+      userID = sessionStorage.getItem("OpenCVId")?.toString();
+      getUserInfo(userID).then((response) => {
+        updateUserDetails(response.userDetails);
+        updateUserSettings(response.userSettings);
+      });
+    }
+  };
   return {
+    UpdateContactPhoneNumber,
+    UpdateContactEmail,
+    InitializeUser,
     AddExperience,
     AddLanguage,
     AddProject,
@@ -260,15 +299,14 @@ const CommonFuntions = () => {
     UpdateTextSection,
     DeleteSection,
     AddContact,
-    UpdateContactTitleSection,
-    UpdateContactDetailsSection,
+    UpdateTitleSection,
+    UpdateDetailsSection,
     CheckSections,
     CheckProjectsStatus,
     CheckSectionTextStatus,
     UpdateSettings,
     UpdateUser,
     StoreUserInfo,
-    GetUserInfo,
     Logout,
     PublishTemplate,
     AutoFill,
@@ -276,7 +314,9 @@ const CommonFuntions = () => {
     UpdateTemplateVersion,
     UnpublishTemplate,
     SendEmail,
-    GenerateToken
+    GenerateToken,
+    AddSkill,
+    CheckContactStatus,
   } as const;
 };
 

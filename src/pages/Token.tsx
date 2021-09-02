@@ -1,33 +1,22 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
 import { GlobalContext } from "../services/AppContext";
-import {
-  addUser,
-  getUsers,
-  getUserInfo,
-  addUserSettings,
-} from "../services/HTTPContext";
+import { addUserSettings, updateUser } from "../services/HTTPContext";
 import CommonFuntions from "../services/CommonFunctions";
 
 const Token = ({ ...props }) => {
-  let { data, updateData, updateUserSettings, updateUserDetails } =
-    useContext(GlobalContext);
-
-  const { StoreUserInfo } = CommonFuntions();
+  let { data, updateUserDetails } = useContext(GlobalContext);
   const [token, setToken] = useState("");
   const [messageError, setMessageError] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const sendToken = () => {
     if (data.userDetails.token === token) {
-      addUser(
-        data.userDetails.userName,
-        data.userDetails.password,
-        data.userDetails.email
-      ).then((response) => {
-        addUserSettings(response.id);
-      });
-      setSuccessMessage("User added");
+      addUserSettings(data.userDetails.id);
+      data.userDetails.verified = true;
+      data.userDetails.token = "";
+      updateUserDetails(data.userDetails);
+      sessionStorage.setItem("OpenCVId", data.userDetails.id);
+      updateUser(data.userDetails.id, data.userDetails.username,data.userDetails.password,data.userDetails.email,data.userDetails.token,data.userDetails.verified);
+      window.location.reload();
     } else {
       setMessageError("Token is wrong");
     }
