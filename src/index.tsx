@@ -13,6 +13,7 @@ import Landing from "./pages/Landing";
 import MyTemplate from "./pages/MyTemplate";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/Signin";
+import UserProfile from "./pages/UserProfile";
 
 const customHistory = createBrowserHistory();
 
@@ -26,6 +27,7 @@ ReactDOM.render(
           <Route path="/builder" component={Builder} exact />
           <Route path="/signup" component={SignUp} exact />
           <Route path="/signin" component={SignIn} exact />
+          <Route path="/user_profile" component={UserProfile} exact />
           <Route path="/template/:id" component={MyTemplate} exact />
         </Switch>
       </Router>

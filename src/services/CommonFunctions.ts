@@ -170,9 +170,7 @@ const CommonFuntions = () => {
     return enable;
   };
 
-  const StoreUserInfo = (info: any) => {
-    sessionStorage.setItem("info", JSON.stringify(info));
-  };
+ 
 
   const Logout = () => {
     sessionStorage.removeItem("OpenCVId");
@@ -306,7 +304,6 @@ const CommonFuntions = () => {
     CheckSectionTextStatus,
     UpdateSettings,
     UpdateUser,
-    StoreUserInfo,
     Logout,
     PublishTemplate,
     AutoFill,

@@ -4,7 +4,7 @@ import CommonFuntions from "../../../services/CommonFunctions";
 import { updateSettings } from "../../../services/HTTPContext";
 import { Link } from "react-router-dom";
 
-const SideMenuSettings = () => {
+const BuilderSideMenu = () => {
   const {
     PublishTemplate,
     AutoFill,
@@ -26,10 +26,7 @@ const SideMenuSettings = () => {
   return (
     <div className="flex  justify-start items-center">
       <div className="flex-col w-full divide-y-2 gap-x-2 h-full justify-end items-center">
-        <div className="flex items-start justify-start p-10 relative">
-          <img src="logo.png" alt="" className="absolute w-2/5 h-4/5 top-0 left-0" />
-         
-        </div>
+       
         <div
           onClick={() => AutoFill()}
           className="cursor-pointer flex items-center hover:bg-gray-500 text-white p-3  bg-indigo-500"
@@ -131,4 +128,4 @@ const SideMenuSettings = () => {
     </div>
   );
 };
-export default SideMenuSettings;
+export default BuilderSideMenu;
