@@ -15,7 +15,7 @@ const TemplateSteps = () => {
     }
   };
   return (
-    <div className="flex text-white justify-center items-start p-2 z-0 relative">
+    <div className="flex text-white  items-start p-2 z-0 relative">
       <div
         onClick={() => updateIndex("personal_details")}
         className={classNames("flex-col p-3 cursor-pointer rounded", {
