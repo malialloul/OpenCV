@@ -1,15 +1,12 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
 import { GlobalContext } from "../services/AppContext";
-import { addUser, getUsers, getUserInfo } from "../services/HTTPContext";
+import { getUsers, getUserInfo } from "../services/HTTPContext";
 import CommonFuntions from "../services/CommonFunctions";
 
 const SignIn = ({ ...props }) => {
-  let { data, updateData, updateUserSettings, updateUserDetails } =
-    useContext(GlobalContext);
+  let { updateUserSettings, updateUserDetails } = useContext(GlobalContext);
 
-  const { StoreUserInfo } = CommonFuntions();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [messageError, setMessageError] = useState("");
@@ -25,12 +22,11 @@ const SignIn = ({ ...props }) => {
         if (list.length !== 0) {
           getUserInfo(list[0].id)
             .then((info) => {
-              console.log(info)
-              StoreUserInfo(info);
               updateUserSettings(info.userSettings);
               updateUserDetails(info.userDetails);
             })
             .then((final) => {
+              sessionStorage.setItem("OpenCVId", list[0].id);
               props.history.push("/home");
             });
         } else {

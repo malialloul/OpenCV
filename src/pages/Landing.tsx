@@ -1,23 +1,31 @@
 import React from "react";
+import { useContext } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
+import { GlobalContext } from "../services/AppContext";
 import CommonFuntions from "../services/CommonFunctions";
 import SignIn from "./Signin";
 import SignUp from "./SignUp";
 import Token from "./Token";
 
 const Landing = ({ ...props }) => {
-  const { GetUserInfo, Logout } = CommonFuntions();
+  const { data, updateUserDetails } = useContext(GlobalContext);
+  const { Logout, InitializeUser } = CommonFuntions();
+  InitializeUser();
+  console.log(data)
+
   const [visibleSignIn, setVisiblitySignIn] = useState(false);
   const [visibleSignUp, setVisiblitySignUp] = useState(false);
-  const [visibleToken, setVisiblityToken] = useState(false);
 
+  const setVisiblityTokenMethod = () => {
+    data.userDetails.token = "";
+    updateUserDetails(data.userDetails);
+  };
   const LogoutUser = () => {
     Logout();
     window.location.reload();
   };
-  const userInfo = GetUserInfo();
 
   return (
     <div className="pl-10 pr-10">
@@ -26,11 +34,11 @@ const Landing = ({ ...props }) => {
           <img src="logo.png" alt="" className="w-2/12" />
         </div>
         <div className="col-span-6 flex justify-end">
-          {userInfo.userDetails.id !== "" ? (
+          {data.userDetails.verified ? (
             <div className="flex justify-center">
               <div className="flex-col">
                 <div className="flex justify-center">
-                  <span>Welcome Again {userInfo.userDetails.username}</span>
+                  <span>Welcome {data.userDetails.username}</span>
                 </div>
                 <button
                   onClick={() => LogoutUser()}
@@ -69,16 +77,16 @@ const Landing = ({ ...props }) => {
         <Modal
           Header={"SignUp"}
           Body={<SignUp {...props} />}
-          visible={visibleSignUp && userInfo.userDetails.id === ""}
+          visible={visibleSignUp}
           onClick={() => setVisiblitySignUp(false)}
         />
 
-        {/* <Modal
-          Header={"Token Verification"}
+        <Modal
+          Header={"Token"}
           Body={<Token {...props} />}
-          visible={userInfo.userDetails.id !== ""}
-          onClick={() => setVisiblityToken(false)}
-       />*/}
+          visible={data.userDetails.token !== "" && !data.userDetails.verified}
+          onClick={() => setVisiblityTokenMethod()}
+        />
       </div>
       <div className="grid grid-cols-12">
         <div className="col-span-8 flex items-center justify-center p-3">

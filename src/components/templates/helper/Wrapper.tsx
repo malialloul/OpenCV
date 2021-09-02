@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../../../services/AppContext";
-import Builder1 from "../../templates/builder/Builder1";
-import Builder2 from "../../templates/builder/Builder2";
-import Builder3 from "../../templates/builder/Builder3";
+import Builder1 from "../builder/Builder1";
+import Builder2 from "../builder/Builder2";
+import Builder3 from "../builder/Builder3";
 
 const Wrapper = ({ ...props }: any) => {
   const { data } = useContext(GlobalContext);

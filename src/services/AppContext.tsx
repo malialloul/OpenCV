@@ -1,11 +1,16 @@
 import React, { createContext, useReducer } from "react";
-import CommonFuntions from "./CommonFunctions";
 import AppReducer from "../services/AppReducer";
 
-const GetUserInfo = () => {
-  const userInfoStorage = sessionStorage.getItem("info");
-  let userInfo = {
-    userDetails: { id: "", username: "", email:"" },
+const initialState = {
+  data: {
+    userDetails: {
+      id: "",
+      username: "",
+      password: "",
+      email: "",
+      token: "",
+      verified: false,
+    },
     userSettings: {
       personal_details: {
         text: "",
@@ -40,6 +45,15 @@ const GetUserInfo = () => {
           textColor: "#000000",
         },
       },
+      skills: {
+        text: "",
+        sections: [],
+        settings: {
+          fontSize: "text-lg",
+          textPosition: "justify-start",
+          textColor: "#000000",
+        },
+      },
       languages: {
         sections: [],
         settings: {
@@ -49,6 +63,10 @@ const GetUserInfo = () => {
         },
       },
       contact: {
+        info: {
+          phoneNumber: "",
+          email: "",
+        },
         sections: [],
         settings: {
           fontSize: "text-lg",
@@ -56,20 +74,7 @@ const GetUserInfo = () => {
           textColor: "#000000",
         },
       },
-      templateIndex: 0,
-      published: false
     },
-  };
-  if (userInfoStorage !== null) {
-    userInfo = JSON.parse(userInfoStorage);
-  }
-  return userInfo;
-};
-
-const initialState = {
-  data: {
-    userDetails: GetUserInfo().userDetails,
-    userSettings: GetUserInfo().userSettings,
     sectionIndex: "",
     settingsModal: false,
   },

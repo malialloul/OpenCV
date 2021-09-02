@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
-import { useState } from "react";
 import { GlobalContext } from "../../../services/AppContext";
 import CommonFuntions from "../../../services/CommonFunctions";
 import { updateSettings } from "../../../services/HTTPContext";
-import classNames from "classnames";
 import { Link } from "react-router-dom";
 
 const SideMenuSettings = () => {
@@ -14,11 +12,11 @@ const SideMenuSettings = () => {
     UpdateTemplateVersion,
     UnpublishTemplate,
   } = CommonFuntions();
-  const [visible, setVisible] = useState(false);
-  const { updateIndex, updateSettingsModal, data } = useContext(GlobalContext);
+  const { data } = useContext(GlobalContext);
   const publish = () => {
     PublishTemplate();
     updateSettings();
+    
   };
 
   const unpublish = () => {
@@ -28,12 +26,9 @@ const SideMenuSettings = () => {
   return (
     <div className="flex  justify-start items-center">
       <div className="flex-col w-full divide-y-2 gap-x-2 h-full justify-end items-center">
-        <div className="flex items-center">
-          <img src="logo.png" alt="" className="w-1/4 h-1/4" />
-          <div className="flex w-full justify-between text-white text-2xl">
-            <div>Hi, {data.userDetails.username}</div>
-            <div className="cursor-pointer">X</div>
-          </div>
+        <div className="flex items-start justify-start p-10 relative">
+          <img src="logo.png" alt="" className="absolute w-2/5 h-4/5 top-0 left-0" />
+         
         </div>
         <div
           onClick={() => AutoFill()}
@@ -109,19 +104,18 @@ const SideMenuSettings = () => {
             </div>
           )}
 
-        {data.userSettings.contact.sections.length !== 0 &&
-          data.userSettings.published && (
-            <div
-              onClick={() => unpublish()}
-              className="cursor-pointer flex  text-white p-3 hover:bg-gray-500  bg-indigo-500"
-            >
-              <img
-                className="w-1/12 h-1/12"
-                src="https://img.icons8.com/material-two-tone/100/000000/flash-auto.png"
-              />
-              <div className="text-center w-full">Unpublish CV</div>
-            </div>
-          )}
+        {data.userSettings.published && (
+          <div
+            onClick={() => unpublish()}
+            className="cursor-pointer flex  text-white p-3 hover:bg-gray-500  bg-indigo-500"
+          >
+            <img
+              className="w-1/12 h-1/12"
+              src="https://img.icons8.com/material-two-tone/100/000000/flash-auto.png"
+            />
+            <div className="text-center w-full">Unpublish CV</div>
+          </div>
+        )}
 
         <Link
           to=""

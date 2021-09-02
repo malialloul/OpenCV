@@ -1,5 +1,3 @@
-import CommonFuntions from "./CommonFunctions";
-
 const AppReducer = (state: any, action: any) => {
   switch (action.type) {
     case "UPDATE_DATA":

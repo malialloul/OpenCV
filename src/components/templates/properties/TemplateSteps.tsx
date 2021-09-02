@@ -15,7 +15,7 @@ const TemplateSteps = () => {
     }
   };
   return (
-    <div className="flex justify-center items-start p-2 z-0 relative">
+    <div className="flex text-white justify-center items-start p-2 z-0 relative">
       <div
         onClick={() => updateIndex("personal_details")}
         className={classNames("flex-col p-3 cursor-pointer rounded", {
@@ -27,14 +27,17 @@ const TemplateSteps = () => {
           <span className="">Personal Profile</span>
         </div>
       </div>
-
       <div
         onClick={() =>
-          updateTemplateIndex(data.userSettings.personal_details.text !== "", "education")
+          updateTemplateIndex(
+            data.userSettings.personal_details.text !== "",
+            "education"
+          )
         }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
           "hover:bg-gray-200":
-            data.sectionIndex !== "education" && data.userSettings.personal_details.text !== "",
+            data.sectionIndex !== "education" &&
+            data.userSettings.personal_details.text !== "",
           "bg-gray-200": data.sectionIndex === "education",
           "text-gray-500": data.userSettings.personal_details.text === "",
         })}
@@ -43,7 +46,6 @@ const TemplateSteps = () => {
           <span className="">Education</span>
         </div>
       </div>
-
       <div
         onClick={() =>
           updateTemplateIndex(CheckSections("education"), "experience")
@@ -59,7 +61,21 @@ const TemplateSteps = () => {
           <span className="">Experience</span>
         </div>
       </div>
-
+      <div
+        onClick={() =>
+          updateTemplateIndex(CheckSections("experience"), "skills")
+        }
+        className={classNames("flex-col p-3 cursor-pointer rounded", {
+          "hover:bg-gray-200":
+            data.sectionIndex !== "skills" && CheckSections("experience"),
+          "bg-gray-200": data.sectionIndex === "skills",
+          "text-gray-500": !CheckSections("experience"),
+        })}
+      >
+        <div className={"flex "}>
+          <span className="">Skills</span>
+        </div>
+      </div>
       <div
         onClick={() =>
           updateTemplateIndex(CheckSections("experience"), "projects")
@@ -75,7 +91,6 @@ const TemplateSteps = () => {
           <span className="">Projects</span>
         </div>
       </div>
-
       <div
         onClick={() => updateTemplateIndex(CheckProjectsStatus(), "languages")}
         className={classNames("flex-col p-3 cursor-pointer rounded", {
@@ -89,14 +104,14 @@ const TemplateSteps = () => {
           <span className="">Languages</span>
         </div>
       </div>
-
       <div
         onClick={() =>
           updateTemplateIndex(CheckSectionTextStatus("languages"), "contact")
         }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
           "hover:bg-gray-200":
-            data.sectionIndex !== "contact" && CheckSectionTextStatus("languages"),
+            data.sectionIndex !== "contact" &&
+            CheckSectionTextStatus("languages"),
           "bg-gray-200": data.sectionIndex === "contact",
           "text-gray-500": !CheckSectionTextStatus("languages"),
         })}

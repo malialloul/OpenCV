@@ -1,10 +1,9 @@
 import React from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { Redirect, useHistory } from "react-router-dom";
 import { GlobalContext } from "../services/AppContext";
 import CommonFuntions from "../services/CommonFunctions";
-import { addUser, getUsers, addUserSettings } from "../services/HTTPContext";
+import { addUser, getUsers } from "../services/HTTPContext";
 
 const SignUp = ({ ...props }) => {
   const [userName, setUserName] = useState("");
@@ -18,7 +17,12 @@ const SignUp = ({ ...props }) => {
   const { GenerateToken } = CommonFuntions();
 
   const signUp = () => {
-    if (userName === "" || password === "" || confirmPassword === "") {
+    var pattern = new RegExp(
+      /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
+    );
+    if (!pattern.test(email)) {
+      setMessageError("Email Error");
+    } else if (userName === "" || password === "" || confirmPassword === "") {
       setMessageError("Please fill all fields");
       //to be modified
     } else if (password.length > 8) {
@@ -31,20 +35,28 @@ const SignUp = ({ ...props }) => {
         if (list.length === 0) {
           GenerateToken();
           const token = data.userDetails.token;
-          const toSend = {
-            from: "OpenCv",
-            email: email,
-            message: "This is a message " + token,
-          };
-          SendEmail(toSend);
-          updateUserDetails({
-            id: "",
-            userName: userName,
-            password: password,
-            email: email,
-            token: token,
+          console.log(token);
+          addUser(userName, password, email, token, false).then((user) => {
+            const toSend = {
+              from: "OpenCv",
+              email: email,
+              message: "This is a message " + token,
+            };
+            // SendEmail(toSend);
+            updateUserDetails({
+              id: JSON.parse(JSON.stringify(user)).id,
+              username: userName,
+              password: password,
+              email: email,
+              token: token,
+              verified: false,
+            });
           });
           setSuccessMessage("User Created Successfully");
+        } else if (list[0].verified === 0) {
+          setMessageError(
+            "This email already in use but not verified. User another one"
+          );
         } else {
           setMessageError("This email already in use. User another one");
         }
@@ -64,6 +76,7 @@ const SignUp = ({ ...props }) => {
               placeholder="UserName"
               type="text"
               name="username"
+              required
               onChange={(e) => setUserName(e.target.value)}
             />
             <input
@@ -71,18 +84,21 @@ const SignUp = ({ ...props }) => {
               placeholder="Email"
               type="email"
               name="email"
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
               className="rounded p-3 bg-white border-b-2"
               placeholder="Password"
               type="password"
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
             <input
               className="rounded p-3 bg-white border-b-2"
               placeholder="Confirm Password"
               type="password"
+              required
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
             <br />

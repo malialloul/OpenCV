@@ -2,25 +2,25 @@ import React, { useContext } from "react";
 import Modal from "../components/Modal";
 import Configurations from "../components/templates/properties/Configurations";
 import Settings from "../components/templates/properties/Settings";
-import SideMenu from "../components/templates/properties/TemplateSteps";
-import SideMenuSettings from "../components/templates/sections/SideMenuSettings";
-import Wrapper from "../components/templates/sections/Wrapper";
+import SideMenuSettings from "../components/templates/helper/SideMenuSettings";
+import Wrapper from "../components/templates/helper/Wrapper";
 import { GlobalContext } from "../services/AppContext";
 import CommonFuntions from "../services/CommonFunctions";
-import { updateSettings } from "../services/HTTPContext";
+import TemplateSteps from "../components/templates/properties/TemplateSteps";
 
 const Builder = () => {
+  const { Logout, InitializeUser } = CommonFuntions();
+  InitializeUser();
   const { Header, Body } = Configurations();
-
   const { SettingsHeader, SettingsBody } = Settings();
   const { updateIndex, updateSettingsModal, data } = useContext(GlobalContext);
-  console.log(data.sectionIndex)
   const modifyTemplateVisibility = () => {
     updateIndex("");
   };
   const modifySettingsVisibility = () => {
     updateSettingsModal();
   };
+  console.log(data)
 
   return (
     <div className="">
@@ -29,9 +29,17 @@ const Builder = () => {
           <SideMenuSettings />
         </div>
 
-        <div className="col-span-10 p-3">
+        <div className="col-span-10">
+        <div className="bg-indigo-500 flex justify-between p-1">
+        <TemplateSteps />
+
+        <div className="flex items-center">
+            <div className="text-2xl text-white">Hi, {data.userDetails.username}</div>
+
+        </div>
+            </div>
           <div className="flex-col">
-            <SideMenu />
+           
             {data.userSettings.published && (
               <div className="bg-green-300 p-3  rounded">
                 <span>
@@ -46,7 +54,9 @@ const Builder = () => {
                 </span>
               </div>
             )}
+            <div className="p-3">
             <Wrapper />
+            </div>
 
             <div className="flex items-center">
               <Modal
