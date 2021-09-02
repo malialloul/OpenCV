@@ -12,10 +12,10 @@
   "settings": [
     {
       "id": "d3bee488-ff47-40a3-8379-e1a0f993de65",
-      "templateIndex": 1,
-      "published": false,
+      "templateIndex": 0,
+      "published": true,
       "personal_details": {
-        "text": "I recentlysss graduated with a bachelor’s degree in mathematics, majoring in statistics and analytics. I have experience working in the financial sector by way of an internship with a major multinational firm, which has helped me develop technical capabilities in data engineering and science. I have consistently proven my ability to meet deadlines and achieve project objectives, solve mission-critical problems and prioritize crucial tasks while maintaining the high standards expected of my role. I am currently seeking a position in an established data science firm to further my career goals",
+        "text": "I recently graduated with a bachelor’s degree in mathematics, majoring in statistics and analytics. I have experience working in the financial sector by way of an internship with a major multinational firm, which has helped me develop technical capabilities in data engineering and science. I have consistently proven my ability to meet deadlines and achieve project objectives, solve mission-critical problems and prioritize crucial tasks while maintaining the high standards expected of my role. I am currently seeking a position in an established data science firm to further my career goals",
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
