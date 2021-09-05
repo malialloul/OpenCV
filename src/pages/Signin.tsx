@@ -5,29 +5,37 @@ import { getUsers, getUserInfo } from "../services/HTTPContext";
 import CommonFuntions from "../services/CommonFunctions";
 
 const SignIn = ({ ...props }) => {
-  let { updateUserSettings, updateUserDetails } = useContext(GlobalContext);
+  let { data, updateUserDetails, updateTemplates } = useContext(GlobalContext);
 
-  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [messageError, setMessageError] = useState("");
   const signIn = () => {
-    if (userName === "" || password === "") {
+    if (email === "" || password === "") {
       setMessageError("Please fill all fields");
     } else {
       getUsers().then((response) => {
         let list = response.filter(
-          (user: any) =>
-            user.username === userName && user.password === password
+          (user: any) => user.email === email && user.password === password
         );
         if (list.length !== 0) {
           getUserInfo(list[0].id)
             .then((info) => {
-              updateUserSettings(info.userSettings);
+              console.log(info);
+              let list: any = [];
+              info.userTemplates.map((t: any, index) => {
+                let templateInfo = {
+                  id: t.id,
+                  name: t.templateName,
+                };
+                list.push(templateInfo);
+              });
+              updateTemplates(list);
               updateUserDetails(info.userDetails);
             })
             .then((final) => {
               sessionStorage.setItem("OpenCVId", list[0].id);
-              props.history.push("/home");
+              props.history.push("/dashboard");
             });
         } else {
           setMessageError("User Not Found");
@@ -44,9 +52,9 @@ const SignIn = ({ ...props }) => {
             <div className="text-red-500">{messageError}</div>
             <input
               className="rounded p-3 bg-white border-b-2"
-              placeholder="UserName"
-              type="text"
-              onChange={(e) => setUserName(e.target.value)}
+              placeholder="Email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>

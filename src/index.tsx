@@ -14,6 +14,7 @@ import MyTemplate from "./pages/MyTemplate";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/Signin";
 import UserProfile from "./pages/UserProfile";
+import Dashboard from "./pages/Dashboard";
 
 const customHistory = createBrowserHistory();
 
@@ -28,6 +29,8 @@ ReactDOM.render(
           <Route path="/signup" component={SignUp} exact />
           <Route path="/signin" component={SignIn} exact />
           <Route path="/user_profile" component={UserProfile} exact />
+          <Route path="/dashboard" component={Dashboard} exact />
+
           <Route path="/template/:id" component={MyTemplate} exact />
         </Switch>
       </Router>

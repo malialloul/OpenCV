@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import { GlobalContext } from "../services/AppContext";
-import { addUserSettings, updateUser } from "../services/HTTPContext";
+import { updateUser } from "../services/HTTPContext";
 import CommonFuntions from "../services/CommonFunctions";
 
 const Token = ({ ...props }) => {
@@ -10,7 +10,7 @@ const Token = ({ ...props }) => {
   const [messageError, setMessageError] = useState("");
   const sendToken = () => {
     if (data.userDetails.token === token) {
-      addUserSettings(data.userDetails.id);
+      //addUserSettings(data.userDetails.id);
       data.userDetails.verified = true;
       data.userDetails.token = "";
       updateUserDetails(data.userDetails);

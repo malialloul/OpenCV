@@ -3,6 +3,7 @@ import { GlobalContext } from "../services/AppContext";
 import CommonFuntions from "../services/CommonFunctions";
 import DropDownMenu from "../components/inputs/DropDownMenu";
 import { Link } from "react-router-dom";
+import SideMenu from "./helper/SideMenu";
 
 const Layout = ({ ...props }) => {
   const { Logout, InitializeUser } = CommonFuntions();
@@ -21,9 +22,11 @@ const Layout = ({ ...props }) => {
               backgroundColor="bg-indigo-500"
               title={"Hi, " + data.userDetails.username}
             >
-              <span onClick={() => Logout()}>Logout</span>
+              <Link to="/" className="no-underline text-white">
+                <span onClick={() => Logout()}>Logout</span>
+              </Link>
               <Link to="/user_profile" className="no-underline text-white">
-              <span>User Profile</span>
+                <span>User Profile</span>
               </Link>
             </DropDownMenu>
           </div>
@@ -31,11 +34,9 @@ const Layout = ({ ...props }) => {
       </div>
       <div className="grid grid-cols-12 h-screen">
         <div className="bg-indigo-500 col-span-2 h-full">
-         {props.sideMenu}
+          <SideMenu />
         </div>
-        <div className="col-span-10 p-3">
-        {props.body}
-        </div>
+        <div className="col-span-10 p-3">{props.body}</div>
       </div>
     </div>
   );

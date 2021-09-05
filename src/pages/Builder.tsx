@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
 import Modal from "../components/Modal";
-import Configurations from "../components/templates/properties/Configurations";
-import Settings from "../components/templates/properties/Settings";
-import Wrapper from "../components/templates/helper/Wrapper";
+import Configurations from "../components/properties/Configurations";
+import Settings from "../components/properties/Settings";
 import { GlobalContext } from "../services/AppContext";
 import CommonFuntions from "../services/CommonFunctions";
-import TemplateSteps from "../components/templates/properties/TemplateSteps";
+import TemplateSteps from "../components/builder/TemplateSteps";
 import Layout from "../components/Layout";
-import BuilderSideMenu from "../components/templates/helper/BuilderSideMenu";
+import BuilderSideMenu from "../components/builder/BuilderHeader";
+import BuilderBody from "../components/builder/BuilderBody";
 
 const Builder = () => {
   const { InitializeUser } = CommonFuntions();
   InitializeUser();
   const { Header, Body } = Configurations();
   const { SettingsHeader, SettingsBody } = Settings();
-  const { updateIndex, updateSettingsModal, data } = useContext(GlobalContext);
+  const { updateBuilderSectionIndex, updateSettingsModal, data } = useContext(GlobalContext);
   const modifyTemplateVisibility = () => {
-    updateIndex("");
+    updateBuilderSectionIndex("");
   };
   const modifySettingsVisibility = () => {
     updateSettingsModal();
@@ -26,7 +26,7 @@ const Builder = () => {
     <>
       <Layout
         header={<TemplateSteps />}
-        body={<Wrapper />}
+        body={<BuilderBody />}
         sideMenu={<BuilderSideMenu />}
       />
       <div className="flex-col z-0">
@@ -34,7 +34,7 @@ const Builder = () => {
           <Modal
             Header={Header}
             Body={Body}
-            visible={data.sectionIndex !== ""}
+            visible={data.builderSectionIndex !== ""}
             onClick={modifyTemplateVisibility}
           />
           <Modal

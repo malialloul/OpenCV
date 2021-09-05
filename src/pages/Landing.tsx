@@ -95,7 +95,7 @@ const Landing = ({ ...props }) => {
               Build Your CV Easily. We Guide You Through the Process
             </h2>
             <div className="flex items-center justify-center p-5">
-              <Link to="/home">
+              <Link to="/dashboard">
                 <button className="rounded text-white p-3 bg-indigo-500">
                   Create Your CV
                 </button>

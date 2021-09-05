@@ -11,7 +11,7 @@ const initialState = {
       token: "",
       verified: false,
     },
-    userSettings: {
+    settings: {
       personal_details: {
         text: "",
         settings: {
@@ -75,17 +75,22 @@ const initialState = {
         },
       },
     },
-    sectionIndex: "",
+    templates: [],
+    builderSectionIndex: "",
+    homeSectionIndex: "name",
+    templateIndex: -1,
     settingsModal: false,
   },
 } as {
   data: any;
   updateData: (item: any) => void;
-  updateIndex: (item: string) => void;
+  updateBuilderSectionIndex: (item: string) => void;
+  updateHomeSectionIndex: (item: string) => void;
   updateSettingsModal: () => void;
   updateTempIndex: (item: number) => void;
-  updateUserSettings: (item: any) => void;
+  updateSettings: (item: any) => void;
   updateUserDetails: (item: any) => void;
+  updateTemplates: (item: any) => void;
 };
 
 export const GlobalContext = createContext(initialState);
@@ -98,9 +103,15 @@ const GlobalProvider = ({ ...props }: any) => {
       payload: item,
     });
   };
-  const updateIndex = (item: any) => {
+  const updateBuilderSectionIndex = (item: any) => {
     dispatch({
-      type: "UPDATE_SECTION_INDEX",
+      type: "UPDATE_BUILDER_SECTION_INDEX",
+      payload: item,
+    });
+  };
+  const updateHomeSectionIndex = (item: any) => {
+    dispatch({
+      type: "UPDATE_HOME_SECTION_INDEX",
       payload: item,
     });
   };
@@ -117,9 +128,9 @@ const GlobalProvider = ({ ...props }: any) => {
     });
   };
 
-  const updateUserSettings = (item: any) => {
+  const updateSettings = (item: any) => {
     dispatch({
-      type: "UPDATE_USER_SETTINGS",
+      type: "UPDATE_SETTINGS",
       payload: item,
     });
   };
@@ -130,17 +141,25 @@ const GlobalProvider = ({ ...props }: any) => {
       payload: item,
     });
   };
+  const updateTemplates = (item: []) => {
+    dispatch({
+      type: "UPDATE_TEMPLATES",
+      payload: item,
+    });
+  };
 
   return (
     <GlobalContext.Provider
       value={{
         data: state.data,
         updateData,
-        updateIndex,
+        updateBuilderSectionIndex,
+        updateHomeSectionIndex,
         updateSettingsModal,
         updateTempIndex,
-        updateUserSettings,
+        updateSettings,
         updateUserDetails,
+        updateTemplates,
       }}
     >
       {props.children}

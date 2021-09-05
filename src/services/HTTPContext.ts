@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { GlobalContext } from "./AppContext";
 
-
 export const addUser = async (
   username: string,
   password: string,
@@ -29,6 +28,33 @@ export const addUser = async (
   };
   return await fetch("http://localhost:8000/users/", requestOptions).then(
     (response) => response.json()
+  );
+};
+
+
+
+export const addTemplate = async (
+  userID: string,
+  templateIndex: string,
+  templateName: string
+) => {
+  const id = uuidv4();
+  const body = {
+    id: id,
+    userID: userID,
+    templateIndex: templateIndex,
+    templateName: templateName,
+  };
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+  return await fetch("http://localhost:8000/templates/", requestOptions).then(
+    (response) => JSON.stringify(body)
   );
 };
 
@@ -83,7 +109,9 @@ export const updateSettings = async () => {
   ).then((response) => console.log(response.json()));
 };
 
-export const addUserSettings = async (id: string) => {
+export const addTemplateSettings = async (templateId: string) => {
+  const id = uuidv4();
+
   const requestOptions = {
     method: "POST",
     headers: {
@@ -92,8 +120,7 @@ export const addUserSettings = async (id: string) => {
     },
     body: JSON.stringify({
       id: id,
-      templateIndex: 1,
-      published: false,
+      templateId: templateId,
       personal_details: {
         text: "",
         settings: {
@@ -174,6 +201,19 @@ export const getUserDetails = async (userId: string) => {
   );
 };
 
+export const getUserTemplates = async (userId: string) => {
+  return await fetch("http://localhost:8000/templates?userID=" + userId).then(
+    (response) => response.json()
+  );
+};
+
+export const getTemplateSettings = async (templateId: string) => {
+  return await fetch("http://localhost:8000/settings?templateId=" + templateId).then(
+    (response) => response.json()
+  );
+};
+
+
 export const getUserSettings = async (userId: string) => {
   return await fetch("http://localhost:8000/settings/" + userId).then(
     (response) => response.json()
@@ -183,14 +223,15 @@ export const getUserSettings = async (userId: string) => {
 export const getUserInfo = async (userId: string) => {
   let user = {
     userDetails: {},
-    userSettings: { templateIndex: 0 },
+    userTemplates: [],
   };
 
   await getUserDetails(userId).then((response) => {
     user.userDetails = response;
   });
-  await getUserSettings(userId).then((response) => {
-    user.userSettings = response;
+
+  await getUserTemplates(userId).then((response) => {
+    user.userTemplates = response;
   });
   return user;
 };

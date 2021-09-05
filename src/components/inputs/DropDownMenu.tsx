@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { useState } from "react";
 
 const DropDownMenu = ({ ...props }: any) => {
-  console.log(props.children);
   const [visible, isVisible] = useState(false);
   return (
     <div className="flex-col relative">
