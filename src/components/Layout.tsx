@@ -15,7 +15,11 @@ const Layout = ({ ...props }) => {
         <div className="col-span-2">
           <img src="logo.png" alt="" className="w-20" />
         </div>
-        <div className="col-span-8">{props.header}</div>
+        <div className="col-span-8">
+          <div className="flex h-full text-2xl items-center text-white">
+            <span>{props.pageName}</span>
+          </div>
+        </div>
         <div className="col-span-2 flex justify-end items-center">
           <div className="flex z-1 items-center mr-3 z-1">
             <DropDownMenu
@@ -36,7 +40,7 @@ const Layout = ({ ...props }) => {
         <div className="bg-indigo-500 col-span-2 h-full">
           <SideMenu />
         </div>
-        <div className="col-span-10 p-3">{props.body}</div>
+        <div className="col-span-10">{props.body}</div>
       </div>
     </div>
   );

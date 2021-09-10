@@ -1,11 +1,13 @@
 import React from "react";
-import Contact from "../sections/Contact";
+import Contact from "../sections/PersonalInformation";
 import Education from "../sections/Education";
 import Experience from "../sections/Experience";
 import Languages from "../sections/Languages";
 import PersonalProfile from "../sections/PersonalProfile";
 import Projects from "../sections/Projects";
 import Skills from "../sections/Skills";
+import PersonalInformation from "../sections/PersonalInformation";
+import AdditionalSections from "../sections/AdditionalSections";
 
 const Builder1 = ({ ...props }) => {
   return (
@@ -13,11 +15,11 @@ const Builder1 = ({ ...props }) => {
       <div className="col-span-3 h-screen text-white bg-gray-700">
         {props.debug ? (
           <div className="p-3 flex-col">
-            <Contact showTitle={true} />
+            <PersonalInformation showTitle={true} />
           </div>
         ) : (
           <div className="p-3 flex-col">
-            <span>Contact</span>
+            <span>Personal Information</span>
             <div className="w-full p-3 bg-gray-400 mb-2"></div>
             <div className="w-full p-3 bg-gray-400 mb-2"></div>
             <div className="w-full p-3 bg-gray-400 mb-2"></div>
@@ -102,6 +104,7 @@ const Builder1 = ({ ...props }) => {
             <div className="w-full p-3 bg-gray-400 mb-2"></div>
           </div>
         )}
+        <AdditionalSections/>
       </div>
     </div>
   );

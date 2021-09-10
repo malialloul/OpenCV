@@ -6,26 +6,24 @@ import { GlobalContext } from "../services/AppContext";
 import CommonFuntions from "../services/CommonFunctions";
 import TemplateSteps from "../components/builder/TemplateSteps";
 import Layout from "../components/Layout";
-import BuilderSideMenu from "../components/builder/BuilderHeader";
+import BuilderSideMenu from "../components/builder/BuilderSettings";
 import BuilderBody from "../components/builder/BuilderBody";
 
 const Builder = () => {
   const { InitializeUser } = CommonFuntions();
   InitializeUser();
   const { Header, Body } = Configurations();
-  const { SettingsHeader, SettingsBody } = Settings();
-  const { updateBuilderSectionIndex, updateSettingsModal, data } = useContext(GlobalContext);
+  const { updateBuilderSectionIndex, updateSettingsModal, data } =
+    useContext(GlobalContext);
   const modifyTemplateVisibility = () => {
     updateBuilderSectionIndex("");
   };
-  const modifySettingsVisibility = () => {
-    updateSettingsModal();
-  };
+ 
 
   return (
     <>
       <Layout
-        header={<TemplateSteps />}
+        pageName="Builder"
         body={<BuilderBody />}
         sideMenu={<BuilderSideMenu />}
       />
@@ -36,12 +34,6 @@ const Builder = () => {
             Body={Body}
             visible={data.builderSectionIndex !== ""}
             onClick={modifyTemplateVisibility}
-          />
-          <Modal
-            Header={SettingsHeader}
-            Body={SettingsBody}
-            visible={data.settingsModal}
-            onClick={modifySettingsVisibility}
           />
         </div>
       </div>

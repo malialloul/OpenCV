@@ -6,43 +6,39 @@ import { v4 as uuidv4 } from "uuid";
 import { getUserInfo } from "./HTTPContext";
 
 const CommonFuntions = () => {
-  let {
-    data,
-    updateData,
-    updateUserDetails,
-    updateTemplates,
-  } = useContext(GlobalContext);
+  let { data, updateData, updateUserDetails, updateTemplates } =
+    useContext(GlobalContext);
   const AddExperience = () => {
     let list = {
       from: "",
       to: "",
       text: "",
     };
-    data.settings[data.sectionIndex].sections.push(list);
+    data.settings[data.builderSectionIndex].sections.push(list);
     updateData(data);
   };
 
   const AddLanguage = () => {
-    data.settings[data.sectionIndex].sections.push("");
+    data.settings[data.builderSectionIndex].sections.push("");
     updateData(data);
   };
 
-  const AddContact = () => {
-    let list = {
-      title: "",
-      details: "",
-    };
-    data.settings[data.sectionIndex].sections.push(list);
+  const AddPersonalInfo = () => {
+    data.settings[data.builderSectionIndex].sections.push("");
     updateData(data);
   };
 
-  const UpdateContactPhoneNumber = (phoneNumber: string) => {
-    data.settings[data.sectionIndex].info.phoneNumber = phoneNumber;
+  const UpdatePersonalInfoPhoneNumber = (phoneNumber: string) => {
+    data.settings[data.builderSectionIndex].info.phoneNumber = phoneNumber;
+    updateData(data);
+  };
+  const UpdatePersonalInfoName = (name: string) => {
+    data.settings[data.builderSectionIndex].info.name = name;
     updateData(data);
   };
 
-  const UpdateContactEmail = (email: string) => {
-    data.settings[data.sectionIndex].info.email = email;
+  const UpdatePersonalInfoEmail = (email: string) => {
+    data.settings[data.builderSectionIndex].info.email = email;
     updateData(data);
   };
 
@@ -51,7 +47,7 @@ const CommonFuntions = () => {
       title: "",
       details: "",
     };
-    data.settings[data.sectionIndex].sections.push(list);
+    data.settings[data.builderSectionIndex].sections.push(list);
     updateData(data);
   };
 
@@ -62,7 +58,7 @@ const CommonFuntions = () => {
       to: "",
       text: "",
     };
-    data.settings[data.sectionIndex].sections.push(list);
+    data.settings[data.builderSectionIndex].sections.push(list);
     updateData(data);
   };
   const AddProject = () => {
@@ -70,54 +66,57 @@ const CommonFuntions = () => {
       projectName: "",
       projectDescription: "",
     };
-    data.settings[data.sectionIndex].sections.push(list);
+    data.settings[data.builderSectionIndex].sections.push(list);
     updateData(data);
   };
 
   const UpdateLanguage = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index] = e.target.value;
+    data.settings[data.builderSectionIndex].sections[index] = e.target.value;
     updateData(data);
   };
 
   const UpdateProjectName = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].projectName =
+    data.settings[data.builderSectionIndex].sections[index].projectName =
       e.target.value;
     updateData(data);
   };
 
   const UpdateProjectDescription = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].projectDescription =
+    data.settings[data.builderSectionIndex].sections[index].projectDescription =
       e.target.value;
     updateData(data);
   };
 
   const ModifyText = (event: any) => {
-    data.settings[data.sectionIndex].text = event.target.value;
+    data.settings[data.builderSectionIndex].text = event.target.value;
     updateData(data);
   };
   const UpdateFromSection = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].from = e.target.value;
+    data.settings[data.builderSectionIndex].sections[index].from =
+      e.target.value;
     updateData(data);
     console.log(data);
   };
   const UpdateToSection = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].to = e.target.value;
+    data.settings[data.builderSectionIndex].sections[index].to = e.target.value;
     updateData(data);
   };
   const UpdateTextSection = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].text = e.target.value;
+    data.settings[data.builderSectionIndex].sections[index].text =
+      e.target.value;
     updateData(data);
   };
   const DeleteSection = (index: number) => {
-    data.settings[data.sectionIndex].sections.splice(index, 1);
+    data.settings[data.builderSectionIndex].sections.splice(index, 1);
     updateData(data);
   };
   const UpdateTitleSection = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].title = e.target.value;
+    data.settings[data.builderSectionIndex].sections[index].title =
+      e.target.value;
     updateData(data);
   };
   const UpdateDetailsSection = (e: any, index: number) => {
-    data.settings[data.sectionIndex].sections[index].details =
+    data.settings[data.builderSectionIndex].sections[index].details =
       e.target.value;
     updateData(data);
   };
@@ -156,11 +155,11 @@ const CommonFuntions = () => {
     return enable;
   };
 
-  const CheckContactStatus = () => {
+  const CheckPersonalInfoStatus = () => {
     return (
-      data.settings.contact.info.phoneNumber !== "" ||
-      data.settings.contact.info.email !== "" ||
-      CheckSectionTextStatus("contact")
+      data.settings.personal_info.info.phoneNumber !== "" &&
+      data.settings.personal_info.info.email !== "" &&
+      data.settings.personal_info.info.name !== ""
     );
   };
 
@@ -172,6 +171,13 @@ const CommonFuntions = () => {
       }
     });
     return enable;
+  };
+
+  const CheckPersonalInfoSections = () => {
+    return (
+      data.settings["personal_info"].sections.filter((item: any) => item === "")
+        .length !== 0
+    );
   };
 
   const Logout = () => {
@@ -190,6 +196,7 @@ const CommonFuntions = () => {
 
   const UpdateTemplateVersion = (index: number) => {
     data.settings.templateIndex = index;
+    sessionStorage.setItem("templateIndex", index + "");
     updateData(data);
   };
 
@@ -208,20 +215,17 @@ const CommonFuntions = () => {
       to: "2021-01-01",
       text: "Education 1",
     });
-    data.settings.projects.text =
-      "This is a description for all my projects";
+    data.settings.projects.text = "This is a description for all my projects";
     data.settings.projects.sections.push({
       projectName: "Project1",
       projectDescription: "Project Description 1",
     });
     data.settings.languages.sections.push("Arabic");
     data.settings.languages.sections.push("English");
-    data.settings.contact.sections.push({
-      title: "Facebook",
-      details: "www.facebook.com",
-    });
-    data.settings.contact.info.phoneNumber = "+96170888548";
-    data.settings.contact.info.email = "xyz@xyz.com";
+    data.settings.personal_info.sections.push("www.facebook.com");
+    data.settings.personal_info.info.phoneNumber = "+96170888548";
+    data.settings.personal_info.info.email = "xyz@xyz.com";
+    data.settings.personal_info.info.name = "Your name";
 
     data.settings.skills.sections.push({
       title: "Front End Development",
@@ -248,10 +252,11 @@ const CommonFuntions = () => {
     data.settings.education.sections = [];
     data.settings.languages.sections = [];
     data.settings.projects.sections = [];
-    data.settings.contact.sections = [];
+    data.settings.personal_info.sections = [];
     data.settings.skills.sections = [];
-    data.settings.contact.info.phoneNumber = "";
-    data.settings.contact.info.email = "";
+    data.settings.personal_info.info.phoneNumber = "";
+    data.settings.personal_info.info.email = "";
+    data.settings.personal_info.info.name = "";
 
     updateData(data);
   };
@@ -286,9 +291,66 @@ const CommonFuntions = () => {
       });
     }
   };
+  const UpdatePersonalInfoSection = (e: any, index: number) => {
+    data.settings[data.builderSectionIndex].info.sections[index] =
+      e.target.value;
+    updateData(data);
+  };
+  const ModifyAddedSection = (
+    sectionName: string,
+    sectionDetails: string,
+    settings: any
+  ) => {
+    let index = -1;
+
+    data.settings.added_sections.forEach((element: any, i: number) => {
+      if (element.sectionName.toLowerCase() === data.builderSectionIndex) {
+        index = i;
+      }
+    });
+
+    data.settings.added_sections[index].sectionDetails = sectionDetails;
+    data.settings.added_sections[index].settings = settings;
+    updateData(data);
+  };
+
+  const ModifyAddedSectionName = (
+    sectionName: string,
+    originalName: string
+  ) => {
+    let index = -1;
+
+    data.settings.added_sections.forEach((element: any, i: number) => {
+      if (element.sectionName.toLowerCase() === originalName.toLowerCase()) {
+        index = i;
+      }
+    });
+
+    data.settings.added_sections[index].sectionName = sectionName;
+
+    updateData(data);
+  };
+
+  const DeleteAddedSection = (sectionName: string) => {
+    let index = -1;
+
+    data.settings.added_sections.forEach((element: any, i: number) => {
+      if (element.sectionName.toLowerCase() === sectionName.toLowerCase()) {
+        index = i;
+      }
+    });
+
+    data.settings.added_sections = data.settings.added_sections.slice(index, 1);
+
+    updateData(data);
+  };
+
   return {
-    UpdateContactPhoneNumber,
-    UpdateContactEmail,
+    DeleteAddedSection,
+    ModifyAddedSectionName,
+    ModifyAddedSection,
+    UpdatePersonalInfoPhoneNumber,
+    UpdatePersonalInfoEmail,
     InitializeUser,
     AddExperience,
     AddLanguage,
@@ -302,7 +364,7 @@ const CommonFuntions = () => {
     UpdateToSection,
     UpdateTextSection,
     DeleteSection,
-    AddContact,
+    AddPersonalInfo,
     UpdateTitleSection,
     UpdateDetailsSection,
     CheckSections,
@@ -319,7 +381,9 @@ const CommonFuntions = () => {
     SendEmail,
     GenerateToken,
     AddSkill,
-    CheckContactStatus,
+    CheckPersonalInfoStatus,
+    UpdatePersonalInfoName,
+    UpdatePersonalInfoSection,
   } as const;
 };
 

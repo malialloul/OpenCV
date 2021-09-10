@@ -4,17 +4,34 @@ import { useState } from "react";
 
 const DropDownMenu = ({ ...props }: any) => {
   const [visible, isVisible] = useState(false);
+  const click = (ch: any) => {
+    isVisible(false);
+    ch.props.onClick();
+  };
+
+  const onClickOutsideListener = () => {
+    if (visible) {
+      isVisible(false);
+    }
+    document.removeEventListener("click", onClickOutsideListener);
+  };
+
   return (
-    <div className="flex-col relative">
+    <div
+      onMouseLeave={() => {
+        document.addEventListener("click", onClickOutsideListener);
+      }}
+      onClick={() => isVisible(!visible)}
+      className="flex-col relative"
+    >
       <div className="text-white">
-        <div className="flex items-center ">
-          <span className="text-2xl"> {props.title}</span>
+        <div className="flex w-full text-center justify-center items-center ">
+          <span className={props.titleClass}> {props.title}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5 text-white cursor-pointer"
             viewBox="0 0 20 20"
             fill="currentColor"
-            onClick={() => isVisible(!visible)}
           >
             <path
               fillRule="evenodd"
@@ -34,8 +51,11 @@ const DropDownMenu = ({ ...props }: any) => {
             {props.children.map((ch: any, index: any) => {
               return (
                 <div
-                  onClick={() => isVisible(false)}
-                  className="cursor-pointer p-3 w-full hover:bg-gray-500"
+                  onClick={() => click(ch)}
+                  className={
+                    "cursor-pointer p-3 w-full hover:bg-gray-500 " +
+                    ch.props.className
+                  }
                   key={index}
                 >
                   {ch}

@@ -13,7 +13,7 @@ const Landing = ({ ...props }) => {
   const { data, updateUserDetails } = useContext(GlobalContext);
   const { Logout, InitializeUser } = CommonFuntions();
   InitializeUser();
-  console.log(data)
+  console.log(data);
 
   const [visibleSignIn, setVisiblitySignIn] = useState(false);
   const [visibleSignUp, setVisiblitySignUp] = useState(false);
@@ -95,11 +95,13 @@ const Landing = ({ ...props }) => {
               Build Your CV Easily. We Guide You Through the Process
             </h2>
             <div className="flex items-center justify-center p-5">
-              <Link to="/dashboard">
-                <button className="rounded text-white p-3 bg-indigo-500">
-                  Create Your CV
-                </button>
-              </Link>
+              {sessionStorage.getItem("OpenCVId") !== null && (
+                <Link to="/dashboard">
+                  <button className="rounded text-white p-3 bg-indigo-500">
+                    Create Your CV
+                  </button>
+                </Link>
+              )}
             </div>
           </div>
         </div>

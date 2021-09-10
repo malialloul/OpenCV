@@ -5,21 +5,32 @@ import CommonFuntions from "../../services/CommonFunctions";
 
 const TemplateSteps = () => {
   const { data, updateBuilderSectionIndex } = useContext(GlobalContext);
-  console.log(data);
-
-  const { CheckSections, CheckProjectsStatus, CheckSectionTextStatus } =
+  const { CheckSections, CheckProjectsStatus, CheckPersonalInfoStatus } =
     CommonFuntions();
 
   const updateTemplateIndex = (condition: boolean, sectionName: string) => {
-    if (condition) {
+    if (true) {
       updateBuilderSectionIndex(sectionName);
     }
   };
-  console.log(data)
   return (
-    <div className="flex text-white  items-start p-2 z-0 relative">
+    <div className="flex text-white bg-indigo-500 justify-center  items-start p-2 z-0 relative">
       <div
-        onClick={() => updateBuilderSectionIndex("personal_details")}
+        onClick={() => updateBuilderSectionIndex("personal_info")}
+        className={classNames("flex-col p-3 cursor-pointer rounded", {
+          "hover:bg-gray-200": data.builderSectionIndex !== "personal_info",
+          "bg-gray-200": data.builderSectionIndex === "personal_info",
+        })}
+      >
+        <div className={"flex "}>
+          <span className="">Personal Information</span>
+        </div>
+      </div>
+
+      <div
+        onClick={() =>
+          updateTemplateIndex(CheckPersonalInfoStatus(), "personal_details")
+        }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
           "hover:bg-gray-200": data.builderSectionIndex !== "personal_details",
           "bg-gray-200": data.builderSectionIndex === "personal_details",
@@ -37,11 +48,8 @@ const TemplateSteps = () => {
           )
         }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
-          "hover:bg-gray-200":
-            data.builderSectionIndex !== "education" &&
-            data.settings.personal_details.text !== "",
+          "hover:bg-gray-200": data.builderSectionIndex !== "education",
           "bg-gray-200": data.builderSectionIndex === "education",
-          "text-gray-500": data.settings.personal_details.text === "",
         })}
       >
         <div className={"flex items-center "}>
@@ -53,10 +61,8 @@ const TemplateSteps = () => {
           updateTemplateIndex(CheckSections("education"), "experience")
         }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
-          "hover:bg-gray-200":
-            data.builderSectionIndex !== "experience" && CheckSections("education"),
+          "hover:bg-gray-200": data.builderSectionIndex !== "experience",
           "bg-gray-200": data.builderSectionIndex === "experience",
-          "text-gray-500": !CheckSections("education"),
         })}
       >
         <div className={"flex "}>
@@ -68,10 +74,8 @@ const TemplateSteps = () => {
           updateTemplateIndex(CheckSections("experience"), "skills")
         }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
-          "hover:bg-gray-200":
-            data.builderSectionIndex !== "skills" && CheckSections("experience"),
+          "hover:bg-gray-200": data.builderSectionIndex !== "skills",
           "bg-gray-200": data.builderSectionIndex === "skills",
-          "text-gray-500": !CheckSections("experience"),
         })}
       >
         <div className={"flex "}>
@@ -83,10 +87,8 @@ const TemplateSteps = () => {
           updateTemplateIndex(CheckSections("experience"), "projects")
         }
         className={classNames("flex-col p-3 cursor-pointer rounded", {
-          "hover:bg-gray-200":
-            data.builderSectionIndex !== "projects" && CheckSections("experience"),
+          "hover:bg-gray-200": data.builderSectionIndex !== "projects",
           "bg-gray-200": data.builderSectionIndex === "projects",
-          "text-gray-500": !CheckSections("experience"),
         })}
       >
         <div className={"flex "}>
@@ -96,32 +98,39 @@ const TemplateSteps = () => {
       <div
         onClick={() => updateTemplateIndex(CheckProjectsStatus(), "languages")}
         className={classNames("flex-col p-3 cursor-pointer rounded", {
-          "hover:bg-gray-200":
-            data.builderSectionIndex !== "languages" && CheckProjectsStatus(),
+          "hover:bg-gray-200": data.builderSectionIndex !== "languages",
           "bg-gray-200": data.builderSectionIndex === "languages",
-          "text-gray-500": !CheckProjectsStatus(),
         })}
       >
         <div className={"flex "}>
           <span className="">Languages</span>
         </div>
       </div>
-      <div
-        onClick={() =>
-          updateTemplateIndex(CheckSectionTextStatus("languages"), "contact")
-        }
-        className={classNames("flex-col p-3 cursor-pointer rounded", {
-          "hover:bg-gray-200":
-            data.builderSectionIndex !== "contact" &&
-            CheckSectionTextStatus("languages"),
-          "bg-gray-200": data.builderSectionIndex === "contact",
-          "text-gray-500": !CheckSectionTextStatus("languages"),
-        })}
-      >
-        <div className={"flex "}>
-          <span className="">Contact</span>
-        </div>
-      </div>
+      {data.settings.added_sections.map((section: any, index: any) => {
+        return (
+          <div
+            onClick={() =>
+              updateTemplateIndex(
+                CheckProjectsStatus(),
+                (section.sectionName + "").toLowerCase()
+              )
+            }
+            key={"section" + index}
+            className={classNames("flex-col p-3 cursor-pointer rounded", {
+              "hover:bg-gray-200":
+                data.builderSectionIndex !==
+                (section.sectionName + "").toLowerCase(),
+              "bg-gray-200":
+                data.builderSectionIndex ===
+                (section.sectionName + "").toLowerCase(),
+            })}
+          >
+            <div className={"flex "}>
+              <span className="">{section.sectionName}</span>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };

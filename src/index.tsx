@@ -5,7 +5,6 @@ import "./tailwind.css";
 import reportWebVitals from "./reportWebVitals";
 import GlobalProvider from "./services/AppContext";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Home from "./pages/Home";
 import Builder from "./pages/Builder";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
@@ -24,7 +23,6 @@ ReactDOM.render(
       <Router history={customHistory}>
         <Switch>
           <Route path="/" component={Landing} exact />
-          <Route path="/home" component={Home} exact />
           <Route path="/builder" component={Builder} exact />
           <Route path="/signup" component={SignUp} exact />
           <Route path="/signin" component={SignIn} exact />

@@ -1,18 +1,20 @@
 import React from "react";
-import Contact from "../sections/Contact";
+import Contact from "../sections/PersonalInformation";
 import Education from "../sections/Education";
 import Experience from "../sections/Experience";
 import Languages from "../sections/Languages";
 import PersonalProfile from "../sections/PersonalProfile";
 import Projects from "../sections/Projects";
 import Skills from "../sections/Skills";
+import PersonalInformation from "../sections/PersonalInformation";
+import AdditionalSections from "../sections/AdditionalSections";
 
 const Builder2 = ({ ...props }: any) => {
   return (
     <div className="flex-col">
       {props.debug ? (
-        <div className="flex bg-gray-500  p-3 justify-center">
-          <Contact />
+        <div className="bg-gray-500  p-3 text-center">
+          <PersonalInformation />
         </div>
       ) : (
         <div className="bg-gray-500  flex-col p-3">
@@ -105,6 +107,7 @@ const Builder2 = ({ ...props }: any) => {
           <div className="w-full p-3 bg-gray-400 mb-2"></div>
         </div>
       )}
+      <AdditionalSections />
     </div>
   );
 };

@@ -31,8 +31,6 @@ export const addUser = async (
   );
 };
 
-
-
 export const addTemplate = async (
   userID: string,
   templateIndex: string,
@@ -53,6 +51,7 @@ export const addTemplate = async (
     },
     body: JSON.stringify(body),
   };
+  await addTemplateSettings(id);
   return await fetch("http://localhost:8000/templates/", requestOptions).then(
     (response) => JSON.stringify(body)
   );
@@ -87,14 +86,55 @@ export const updateUser = async (
   );
 };
 
-export const updateSettings = async () => {
-  let settings = {};
-  let id = "";
-  const userInfoStorage = sessionStorage.getItem("info");
-  if (userInfoStorage !== null) {
-    settings = JSON.parse(userInfoStorage).userSettings;
-    id = JSON.parse(userInfoStorage).userDetails.id;
-  }
+export const updateTemplate = async (body: any) => {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  };
+  return await fetch(
+    "http://localhost:8000/templates/" + body.id,
+    requestOptions
+  ).then((response) => response.json());
+};
+
+export const deleteTemplate = async (id: any) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+  await deleteSettings(id);
+
+  return await fetch(
+    "http://localhost:8000/templates/" + id,
+    requestOptions
+  ).then((response) => response.json());
+};
+
+export const deleteSettings = async (templateId: any) => {
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
+
+  return await fetch(
+    "http://localhost:8000/templates/templateId=" + templateId,
+    requestOptions
+  ).then((response) => response.json());
+};
+
+export const updateSettings = async (data: any) => {
+  const settings = data.settings;
+
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -104,7 +144,7 @@ export const updateSettings = async () => {
     body: JSON.stringify(settings),
   };
   return await fetch(
-    "http://localhost:8000/settings/" + id,
+    "http://localhost:8000/settings/" + data.settings.id,
     requestOptions
   ).then((response) => console.log(response.json()));
 };
@@ -170,10 +210,11 @@ export const addTemplateSettings = async (templateId: string) => {
           textColor: "#000000",
         },
       },
-      contact: {
+      personal_info: {
         info: {
           phoneNumber: "",
           email: "",
+          name: "",
         },
         sections: [],
         settings: {
@@ -208,11 +249,10 @@ export const getUserTemplates = async (userId: string) => {
 };
 
 export const getTemplateSettings = async (templateId: string) => {
-  return await fetch("http://localhost:8000/settings?templateId=" + templateId).then(
-    (response) => response.json()
-  );
+  return await fetch(
+    "http://localhost:8000/settings?templateId=" + templateId
+  ).then((response) => response.json());
 };
-
 
 export const getUserSettings = async (userId: string) => {
   return await fetch("http://localhost:8000/settings/" + userId).then(

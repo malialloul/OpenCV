@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../services/AppContext";
 import CommonFuntions from "../../services/CommonFunctions";
 
 const Configurations = () => {
-  const { data, updateSettingsModal } = useContext(GlobalContext);
+  const { data, updateSettingsModal, updateData } = useContext(GlobalContext);
   const {
     AddEducation,
     ModifyText,
@@ -17,32 +17,36 @@ const Configurations = () => {
     UpdateProjectDescription,
     UpdateProjectName,
     DeleteSection,
-    AddContact,
+    AddPersonalInfo,
     UpdateTitleSection,
     UpdateDetailsSection,
     AddSkill,
-    UpdateContactPhoneNumber,
-    UpdateContactEmail,
+    UpdatePersonalInfoName,
+    UpdatePersonalInfoPhoneNumber,
+    UpdatePersonalInfoEmail,
+    UpdatePersonalInfoSection,
+    ModifyAddedSection,
   } = CommonFuntions();
+ 
+  let temp: any = {
+    sectionName: "",
+    sectionDetails: "",
+    settings: "",
+  };
+
+  const [addedSectionDetails, setAddedSectionDetails] = useState(temp);
+  useEffect(() => {
+    let details = data.settings.added_sections.filter(
+      (item: any) => item.sectionName === data.builderSectionIndex
+    );
+    if (details.length !== 0) {
+      setAddedSectionDetails(details[0]);
+    }
+  }, [data.builderSectionIndex]);
+
   const Header = (
     <div className="flex justify-between gap-x-0.5">
       <span> {data.builderSectionIndex.toUpperCase().replace("_", " ")}</span>
-      <span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 cursor-pointer"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          onClick={() => updateSettingsModal()}
-        >
-          <path
-            strokeWidth="2"
-            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-          />
-          <path strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      </span>
     </div>
   );
 
@@ -267,25 +271,36 @@ const Configurations = () => {
             )}
           </div>
         </div>
-      ) : data.builderSectionIndex === "contact" ? (
+      ) : data.builderSectionIndex === "personal_info" ? (
         <div className="flex-col">
           <div className="flex justify-center">
             <button
-              onClick={() => AddContact()}
+              onClick={() => AddPersonalInfo()}
               className="rounded cursor-pointer w-full h-12 p-2 bg-indigo-500"
             >
-              Add Contact
+              Add Personal Info
             </button>
           </div>
 
           <div className="flex-col align-middle">
             <div className="flex items-center">
+              <div className="p-2 mb-2 mt-2 w-full">Name</div>
+
+              <input
+                onChange={(e) => UpdatePersonalInfoName(e.target.value)}
+                className="p-2 mb-2 mt-2 w-full"
+                value={data.settings.personal_info.info.name}
+                placeholder={"Name"}
+              />
+            </div>
+
+            <div className="flex items-center">
               <div className="p-2 mb-2 mt-2 w-full">Phone Number</div>
 
               <input
-                onChange={(e) => UpdateContactPhoneNumber(e.target.value)}
+                onChange={(e) => UpdatePersonalInfoPhoneNumber(e.target.value)}
                 className="p-2 mb-2 mt-2 w-full"
-                value={data.settings.contact.info.phoneNumber}
+                value={data.settings.personal_info.info.phoneNumber}
                 placeholder={"Phone Number"}
               />
             </div>
@@ -294,9 +309,9 @@ const Configurations = () => {
               <div className="p-2 mb-2 mt-2 w-full">Email</div>
 
               <input
-                onChange={(e) => UpdateContactEmail(e.target.value)}
+                onChange={(e) => UpdatePersonalInfoEmail(e.target.value)}
                 className="p-2 mb-2 mt-2 w-full"
-                value={data.settings.contact.info.email}
+                value={data.settings.personal_info.info.email}
                 type="email"
                 placeholder={"Email"}
               />
@@ -306,17 +321,13 @@ const Configurations = () => {
           {data.settings[data.builderSectionIndex].sections.map(
             (section: any, index: any) => {
               return (
-                <div key={"contact" + index} className="flex-col align-middle">
+                <div
+                  key={"personal_info" + index}
+                  className="flex-col align-middle"
+                >
                   <div className="flex items-center">
                     <input
-                      onChange={(e) => UpdateTitleSection(e, index)}
-                      className="p-2 mb-2 mt-2 w-full"
-                      value={section.title}
-                      placeholder={"Contact " + (index + 1)}
-                    />
-
-                    <input
-                      onChange={(e) => UpdateDetailsSection(e, index)}
+                      onChange={(e) => UpdatePersonalInfoSection(e, index)}
                       className="p-2 mb-2 mt-2 w-full"
                       value={section.details}
                       placeholder={"Details"}
@@ -376,7 +387,41 @@ const Configurations = () => {
           )}
         </div>
       ) : (
-        <></>
+        data.settings.added_sections.map((section: any, index: any) => {
+          if (
+            (section.sectionName + "").toLowerCase() ===
+            data.builderSectionIndex
+          ) {
+            return (
+              <div
+                key={section.sectionName + "_" + index}
+                className="flex-col p-3"
+              >
+                <div className="flex w-full justify-center text-center">
+                  <span>Section Details</span>
+                </div>
+                <div className="flex w-full justify-center text-center">
+                  <textarea
+                    className="rounded p-3 bg-white border-b-2"
+                    placeholder="Section Details"
+                    rows={4}
+                    cols={30}
+                    value={section.sectionDetails}
+                    name="text"
+                    onChange={(e) =>
+                      ModifyAddedSection(
+                        addedSectionDetails.sectionName,
+                        e.target.value,
+                        addedSectionDetails.settings
+                      )
+                    }
+                    required
+                  />
+                </div>
+              </div>
+            );
+          }
+        })
       )}
     </div>
   );

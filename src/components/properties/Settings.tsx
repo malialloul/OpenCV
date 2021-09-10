@@ -4,7 +4,11 @@ import { useState } from "react";
 import { GlobalContext } from "../../services/AppContext";
 import { SketchPicker } from "react-color";
 
-const Settings = () => {
+const Settings = ({ ...props }) => {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    setVisible(props.visible);
+  }, [props.visible]);
   const fontSizeArray = [
     "text-sm",
     "text-lg",
@@ -12,7 +16,7 @@ const Settings = () => {
     "text-3xl",
     "text-4xl",
   ];
-  const [visible, isVisible] = useState(false);
+  const [visibleColor, isVisibleColor] = useState(false);
   const { data, updateData } = useContext(GlobalContext);
   const tempSettings = {
     fontSize: "text-lg",
@@ -21,36 +25,40 @@ const Settings = () => {
   };
   const [settings, setSettings] = useState(tempSettings);
   useEffect(() => {
-    if (data.builderSectionIndex !== "") {
-      setSettings(data.settings[data.builderSectionIndex].settings);
+    if (data.settingsSectionIndex !== "") {
+      if(data.settings[data.settingsSectionIndex]){
+        setSettings(data.settings[data.settingsSectionIndex].settings);
+      }
+      else{
+        
+      }
     }
-  }, [data.builderSectionIndex, data]);
+  }, [data.settingsSectionIndex, data]);
 
   const increaseFontSize = () => {
-    data.settings[data.builderSectionIndex].settings.fontSize =
+    data.settings[data.settingsSectionIndex].settings.fontSize =
       fontSizeArray[fontSizeArray.indexOf(settings.fontSize) + 1];
     updateData(data);
   };
   const decreaseFontSize = () => {
-    data.settings[data.builderSectionIndex].settings.fontSize =
+    data.settings[data.settingsSectionIndex].settings.fontSize =
       fontSizeArray[fontSizeArray.indexOf(settings.fontSize) - 1];
     updateData(data);
   };
   const modifyTextPosition = (event: any) => {
-    data.settings[data.builderSectionIndex].settings.textPosition = event.target.value;
+    data.settings[data.settingsSectionIndex].settings.textPosition =
+      event.target.value;
     updateData(data);
   };
   const changeTextColor = (event: any) => {
-    data.settings[data.builderSectionIndex].settings.textColor = event.hex;
+    data.settings[data.settingsSectionIndex].settings.textColor = event.hex;
     updateData(data);
   };
-  const SettingsHeader = (
-    <div>{data.builderSectionIndex.toUpperCase().replace("_", " ") + " "} SETTINGS </div>
-  );
+
   const SettingsBody = (
-    <div className="flex flex-col gap-x-10 ">
+    <div className={"flex flex-col gap-x-10"}>
       <div className="flex flex-col h-14 justify-center items-center p-4">
-        <span>Font Size</span>  
+        <span>Font Size</span>
         <div className="flex w-full gap-x-3 justify-center items-center text-center">
           <input
             className={
@@ -71,7 +79,7 @@ const Settings = () => {
 
           <div>
             <input
-              className={"w-40 text-center " + settings.fontSize}
+              className={"w-full text-center " + settings.fontSize}
               value="Font Size"
               readOnly={true}
             />
@@ -90,24 +98,27 @@ const Settings = () => {
           />
         </div>
       </div>
-      <br/>
+      <br />
       <div className="flex w-full flex-col h-14 justify-center items-center p-4">
         <span>Position</span>
-          <select
-            value={settings.textPosition}
-            onChange={(e) => modifyTextPosition(e)}
-          >
-            <option value="justify-start">Left</option>
-            <option value="justify-end">Right</option>
-            <option value="justify-center">Center</option>
-          </select>
+        <select
+          value={settings.textPosition}
+          onChange={(e) => modifyTextPosition(e)}
+        >
+          <option value="justify-start">Left</option>
+          <option value="justify-end">Right</option>
+          <option value="justify-center">Center</option>
+        </select>
       </div>
-      <br/>
+      <br />
       <div className="flex relative w-full flex-col h-14 justify-center items-center p-4">
-        <span className="cursor-pointer" onClick={() => isVisible(!visible)}>
+        <span
+          className="cursor-pointer"
+          onClick={() => isVisibleColor(!visibleColor)}
+        >
           Choose Color
         </span>
-        {visible && (
+        {visibleColor && (
           <div className="absolute z-1 bottom-full top-10">
             <SketchPicker
               color={settings.textColor}
@@ -120,7 +131,7 @@ const Settings = () => {
       <div></div>
     </div>
   );
-  return { SettingsHeader, SettingsBody } as const;
+  return SettingsBody;
 };
 
 export default Settings;

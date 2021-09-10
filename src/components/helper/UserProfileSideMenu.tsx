@@ -15,13 +15,13 @@ const UserProfileSideMenuSettings = () => {
   const { data } = useContext(GlobalContext);
   const publish = () => {
     PublishTemplate();
-    updateSettings();
+   // updateSettings();
     
   };
 
   const unpublish = () => {
     UnpublishTemplate();
-    updateSettings();
+    //updateSettings();
   };
   return (
     <div className="flex  justify-start items-center">
@@ -76,7 +76,6 @@ const UserProfileSideMenuSettings = () => {
 
         {data.userSettings.personal_details.text !== "" && (
           <div
-            onClick={() => updateSettings()}
             className="cursor-pointer flex text-white hover:bg-gray-500  p-3 bg-indigo-500"
           >
             <img

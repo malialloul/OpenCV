@@ -12,6 +12,7 @@ const initialState = {
       verified: false,
     },
     settings: {
+      templateId: "",
       personal_details: {
         text: "",
         settings: {
@@ -62,22 +63,24 @@ const initialState = {
           textColor: "#000000",
         },
       },
-      contact: {
+      personal_info: {
         info: {
           phoneNumber: "",
           email: "",
+          name: "",
         },
         sections: [],
         settings: {
           fontSize: "text-lg",
-          textPosition: "justify-start",
+          textPosition: "justify-center",
           textColor: "#000000",
         },
       },
+      added_sections: []
     },
     templates: [],
     builderSectionIndex: "",
-    homeSectionIndex: "name",
+    settingsSectionIndex: "",
     templateIndex: -1,
     settingsModal: false,
   },
@@ -85,7 +88,7 @@ const initialState = {
   data: any;
   updateData: (item: any) => void;
   updateBuilderSectionIndex: (item: string) => void;
-  updateHomeSectionIndex: (item: string) => void;
+  updateSettingsSectionIndex: (item: string) => void;
   updateSettingsModal: () => void;
   updateTempIndex: (item: number) => void;
   updateSettings: (item: any) => void;
@@ -109,9 +112,9 @@ const GlobalProvider = ({ ...props }: any) => {
       payload: item,
     });
   };
-  const updateHomeSectionIndex = (item: any) => {
+  const updateSettingsSectionIndex = (item: any) => {
     dispatch({
-      type: "UPDATE_HOME_SECTION_INDEX",
+      type: "UPDATE_SETTINGS_SECTION_INDEX",
       payload: item,
     });
   };
@@ -154,7 +157,7 @@ const GlobalProvider = ({ ...props }: any) => {
         data: state.data,
         updateData,
         updateBuilderSectionIndex,
-        updateHomeSectionIndex,
+        updateSettingsSectionIndex,
         updateSettingsModal,
         updateTempIndex,
         updateSettings,

@@ -11,11 +11,11 @@ const AppReducer = (state: any, action: any) => {
       return {
         data: temp,
       };
-    case "UPDATE_HOME_SECTION_INDEX":
-      let homeSection = state.data;
-      homeSection.homeSectionIndex = action.payload;
+    case "UPDATE_SETTINGS_SECTION_INDEX":
+      let settingsSection = state.data;
+      settingsSection.settingsSectionIndex = action.payload;
       return {
-        data: homeSection,
+        data: settingsSection,
       };
     case "UPDATE_TEMPLATE_INDEX":
       let tempIndex = state.data;

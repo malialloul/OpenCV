@@ -19,10 +19,10 @@
   ],
   "settings": [
     {
-      "id": "3bcd95c6-1d3c-4270-be14-0f06a2f25119",
-      "templateId": "ad0e5cf8-b141-4454-82ed-5f99b966509c",
+      "id": "a01c12d5-70ec-4106-ac5b-fa1bb62f1a9a",
+      "templateId": "5d546718-5a19-4fc3-a93d-fe376bf7ffbc",
       "personal_details": {
-        "text": "",
+        "text": "I recently graduated with a bachelor’s degree in mathematics, majoring in statistics and analytics. I have experience working in the financial sector by way of an internship with a major multinational firm, which has helped me develop technical capabilities in data engineering and science. I have consistently proven my ability to meet deadlines and achieve project objectives, solve mission-critical problems and prioritize crucial tasks while maintaining the high standards expected of my role. I am currently seeking a position in an established data science firm to further my career goals",
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
@@ -30,7 +30,13 @@
         }
       },
       "education": {
-        "sections": [],
+        "sections": [
+          {
+            "from": "2020-01-01",
+            "to": "2021-01-01",
+            "text": "Education 1"
+          }
+        ],
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
@@ -38,7 +44,13 @@
         }
       },
       "experience": {
-        "sections": [],
+        "sections": [
+          {
+            "from": "2020-01-01",
+            "to": "2021-01-01",
+            "text": "Experience 1"
+          }
+        ],
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
@@ -46,7 +58,16 @@
         }
       },
       "skills": {
-        "sections": [],
+        "sections": [
+          {
+            "title": "Front End Development",
+            "details": "HTML, CSS ..."
+          },
+          {
+            "title": "Back End Development",
+            "details": "JAVA, Python ..."
+          }
+        ],
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
@@ -54,8 +75,13 @@
         }
       },
       "projects": {
-        "text": "",
-        "sections": [],
+        "text": "This is a description for all my projects",
+        "sections": [
+          {
+            "projectName": "Project1",
+            "projectDescription": "Project Description 1"
+          }
+        ],
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
@@ -63,175 +89,50 @@
         }
       },
       "languages": {
-        "sections": [],
+        "sections": [
+          "Arabic",
+          "English"
+        ],
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
           "textColor": "#000000"
         }
       },
-      "contact": {
+      "personal_info": {
         "info": {
-          "phoneNumber": "",
-          "email": ""
+          "phoneNumber": "+96170888548",
+          "email": "xyz@xyz.com",
+          "name": "Your name"
         },
-        "sections": [],
+        "sections": [
+          "www.facebook.com"
+        ],
         "settings": {
           "fontSize": "text-lg",
           "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      }
-    },
-    {
-      "id": "f5f7c524-ba11-49f5-a109-44b4080245c1",
-      "templateId": "7b7c25c4-a17c-4dee-a3ca-e68e042fe9e0",
-      "personal_details": {
-        "text": "",
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
+          "textColor": "#f5a623"
         }
       },
-      "education": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
+      "added_sections": [
+        {
+          "sectionName": "wwwwwqww",
+          "sectionDetails": "sdccc",
+          "settings": {
+            "fontSize": "text-lg",
+            "textPosition": "justify-center",
+            "textColor": "#000000"
+          }
         }
-      },
-      "experience": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "skills": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "projects": {
-        "text": "",
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "languages": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "contact": {
-        "info": {
-          "phoneNumber": "",
-          "email": ""
-        },
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      }
-    },
-    {
-      "id": "694514fe-64ce-4e11-aead-8dbc3f5816db",
-      "templateId": "c723870f-cf25-4dbc-ab29-ff9598bde7c3",
-      "personal_details": {
-        "text": "",
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "education": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "experience": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "skills": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "projects": {
-        "text": "",
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "languages": {
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      },
-      "contact": {
-        "info": {
-          "phoneNumber": "",
-          "email": ""
-        },
-        "sections": [],
-        "settings": {
-          "fontSize": "text-lg",
-          "textPosition": "justify-start",
-          "textColor": "#000000"
-        }
-      }
+      ]
     }
   ],
   "templates": [
     {
-      "id": "ad0e5cf8-b141-4454-82ed-5f99b966509c",
       "userID": "eb544ab9-a823-48e6-a7c8-e522ba7de909",
-      "templateIndex": "0",
-      "templateName": "CV1"
-    },
-    {
-      "id": "7b7c25c4-a17c-4dee-a3ca-e68e042fe9e0",
-      "userID": "eb544ab9-a823-48e6-a7c8-e522ba7de909",
-      "templateIndex": "0",
-      "templateName": "CV2"
-    },
-    {
-      "id": "c723870f-cf25-4dbc-ab29-ff9598bde7c3",
-      "userID": "eb544ab9-a823-48e6-a7c8-e522ba7de909",
-      "templateIndex": "0",
-      "templateName": "CV3"
+      "id": "5d546718-5a19-4fc3-a93d-fe376bf7ffbc",
+      "templateName": "CV1",
+      "templateIndex": "1"
     }
   ]
 }

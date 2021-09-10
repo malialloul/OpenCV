@@ -16,23 +16,6 @@ const SideMenu = () => {
             Dashboard
           </Link>
         </div>
-        <div className="cursor-pointer flex items-center hover:bg-gray-500 text-white p-3  bg-indigo-500">
-          <Link
-            to="/home"
-            className="text-white text-center w-full no-underline"
-          >
-            Home
-          </Link>
-        </div>
-
-        <div className="cursor-pointer flex items-center hover:bg-gray-500 text-white p-3  bg-indigo-500">
-          <Link
-            to="/builder"
-            className="text-white text-center w-full no-underline"
-          >
-            Builder
-          </Link>
-        </div>
 
         <div className="cursor-pointer flex items-center hover:bg-gray-500 text-white p-3  bg-indigo-500">
           <Link
