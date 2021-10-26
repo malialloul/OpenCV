@@ -30,7 +30,7 @@ const Settings = ({ ...props }) => {
         setSettings(data.settings[data.settingsSectionIndex].settings);
       }
       else{
-        
+
       }
     }
   }, [data.settingsSectionIndex, data]);
